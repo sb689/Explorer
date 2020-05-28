@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Explorer</string>
+
+    <!--    MainActivity-->
+    <string name="introduction">This application helps you to explore the image archives of NASA. Let\'s start to explore. </string>
+    <string name="label_query">Query</string>
+    <string name="query_text">Milky way</string>
+    <string name="label_start_year">Start year</string>
+    <string name="start_year_text">1980</string>
+    <string name="label_end_year">End year</string>
+    <string name="end_year_text">1990</string>
+    <string name="button_search_text">Search</string>
+    <string name="toast_search_criteria_required_msg">Please enter at least one of the search criteria</string>
+
+    <string name="main_error_msg_general">An error occurred. Please try later</string>
+    <string name="main_error_msg">An error occurred. Please try later</string>
+    <string name="main_error_msg_no_network">No network connection found. Please enable wifi or data connection and try again</string>
+    <string name="main_error_msg_no_data_found">No result found. Please try with a different word or years</string>
+
+    <!--    SpaceItemsListActivity-->
+    <string name="item_image_content_desc">image of the searched item </string>
+
+
+    <!--    SpaceDetailActivity-->
+    <string name="label_location_text">Location: </string>
+    <string name="label_photographer_text">Secondary Creator Credit: </string>
+    <string name="label_date_text">Date: </string>
+
+    <string name="image_content">Image of the searched item</string>
+    <string name="next_arrow_content">Click here to go to next item</string>
+    <string name="back_arrow_content">Click here to go to previous item</string>
+
+
+</resources>
