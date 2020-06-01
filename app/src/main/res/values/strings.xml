@@ -11,6 +11,7 @@
     <string name="end_year_text">1990</string>
     <string name="button_search_text">Search</string>
     <string name="toast_search_criteria_required_msg">Please enter at least one of the search criteria</string>
+    <string name="test_banner_unit_id">	ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="main_error_msg_general">An error occurred. Please try later</string>
     <string name="main_error_msg">An error occurred. Please try later</string>

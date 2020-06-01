@@ -1,4 +1,4 @@
-package com.example.explorer;
+package com.example.explorer.ui;
 
 
 import android.util.Log;

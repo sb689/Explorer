@@ -12,18 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.SearchActivity">
+
+        <!--This meta-data tag is required to use Admob.-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6466174421864787~8665515084"/>
+
+
+        <activity android:name=".ui.SearchActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SpaceDetailActivity" />
-        <activity android:name=".SpaceItemListActivity" />
-        <activity android:name=".MainActivity">
 
-        </activity>
+
     </application>
 
 </manifest>

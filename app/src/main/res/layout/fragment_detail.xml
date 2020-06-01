@@ -3,31 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+
 
     <ScrollView
-      android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="@android:color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".DetailFragment"
-        tools:ignore="ScrollViewSize">
 
-    <ImageView
-        android:id="@+id/iv_detail_image"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="12:10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars"
-        android:adjustViewBounds="true"
-        android:background="@android:color/black"
-        android:contentDescription="@string/image_content"
-        />
+        >
+
+
+        <ImageView
+            android:id="@+id/iv_detail_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="12:10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars"
+            android:adjustViewBounds="true"
+            android:background="@android:color/black"
+            android:contentDescription="@string/image_content"
+            />
 
         <TextView
             android:id="@+id/tv_detail_title"
@@ -35,7 +44,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_detail_image"
+           app:layout_constraintTop_toTopOf="parent"
             tools:text="Our Neighbor Andromeda"
             android:layout_marginStart="@dimen/detail_group_margin_left"
             android:layout_marginEnd="@dimen/detail_group_margin_left"
@@ -114,45 +123,30 @@
             android:paddingBottom="50dp"
             />
 
-        <ProgressBar
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:id="@+id/pb_detail"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-            />
 
-        <ImageView
+    <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:id="@+id/iv_front_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:onClick="nextClicked"
         android:background="@drawable/ic_chevron_right_24px"
         android:contentDescription="@string/next_arrow_content"
 
         />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/iv_back_arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="backClicked"
-            android:background="@drawable/ic_chevron_left_24px"
-            android:contentDescription="@string/back_arrow_content"
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/iv_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/ic_chevron_left_24px"
+        android:contentDescription="@string/back_arrow_content"
 
-            />
-
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
