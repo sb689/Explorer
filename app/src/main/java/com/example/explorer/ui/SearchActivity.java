@@ -16,15 +16,20 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
+    public static final String ANALYTICS_SEARCH_KEY = "search_key";
+    public static final String ANALYTICS_SELECTED_RESPONSE = "search_item_selected";
+
 
     public static int mPosition;
     private AdView mAdView;;
     private FrameLayout adContainerView;
+    public static FirebaseAnalytics mFirebaseAnalytics;
 
     public static int getmPosition() {
         return mPosition;
@@ -35,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) { }

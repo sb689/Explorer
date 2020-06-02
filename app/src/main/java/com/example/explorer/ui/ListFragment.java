@@ -18,11 +18,8 @@ import com.example.explorer.R;
 import com.example.explorer.databinding.FragmentListBinding;
 import com.example.explorer.model.SpaceViewModel2;
 import com.example.explorer.model.spaceResponse.Item;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 
 import java.util.List;
 
@@ -31,6 +28,7 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
     private static final String TAG = ListFragment.class.getSimpleName();
     private FragmentListBinding mDataBinding;
     private SpaceItemListAdapter mAdapter;
+
 
     @Nullable
     @Override
@@ -52,10 +50,10 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
         viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
+
                 mAdapter.setSpaceData(items);
             }
         });
-
 
         return mDataBinding.getRoot();
     }
@@ -64,7 +62,12 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
 
     @Override
     public void itemClicked(int position) {
-        Log.d(TAG, "item clicked received ListFragment");
+
+        //log events analytics
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, SearchActivity.ANALYTICS_SELECTED_RESPONSE);
+        bundle.putString(FirebaseAnalytics.Param.VALUE, Integer.toString(position));
+        SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
         ((SearchActivity) requireActivity()).showDetail(position);
     }
 }

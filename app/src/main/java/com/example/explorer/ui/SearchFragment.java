@@ -29,6 +29,7 @@ import com.example.explorer.model.YearViewModel;
 import com.example.explorer.model.spaceResponse.Item;
 import com.example.explorer.model.spaceResponse.SpaceResponse;
 import com.example.explorer.network.SpaceApiService;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.explorer.ui.SearchActivity.mFirebaseAnalytics;
 
 public class SearchFragment  extends Fragment {
 
@@ -261,6 +264,7 @@ public class SearchFragment  extends Fragment {
                             SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
                             viewModel.setItemList(items);
                             saveQuery(query, yearStart, yearEnd);
+
                             hideProgressBar();
                             ((SearchActivity) requireActivity()).showSearchResponseList();
                         }
@@ -288,52 +292,15 @@ public class SearchFragment  extends Fragment {
 
 
 
-    public List<Item> getSpaceData(String query, String startYear, String endYear){
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        SpaceApiService service = retrofit.create(SpaceApiService.class);
-        showProgressBar();
-        Call<SpaceResponse> call = service.getResult(query, startYear, endYear, PARAM_MEDIA_TYPE);
-
-        call.enqueue(new Callback<SpaceResponse>() {
-            @Override
-            public void onResponse(Call<SpaceResponse> call, Response<SpaceResponse> response) {
-                Log.d(TAG, ":::::::::::::: call succeed, " + response.toString());
-                Log.d(TAG, ":::::::::::::: call succeed, " + response.body());
-
-
-                if (response.code() == 200) {
-                    SpaceResponse spaceResponse = response.body();
-                    List<Item> items = spaceResponse.getCollection().getItems();
-                    Log.d(TAG, ":::::::::::::: inside onResponse, items.size = " + items.size());
-                    mResponseData = items;
-
-                } else {
-
-                    Log.d(TAG, ":::::::::::::: call succeed with an error, " + response.toString());
-                }
-                hideProgressBar();
-
-            }
-
-            @Override
-            public void onFailure(Call<SpaceResponse> call, Throwable t) {
-                showErrorMessage(ERROR_TAG_GENERAL);
-                Log.d(TAG, ":::::::::::::: retrofit call failed, ");
-                Log.d(TAG, ":::::::::::::: retrofit call failed, " + t.getMessage());
-
-            }
-        });
-        return mResponseData;
-    }
-
     private void saveQuery(String query, String yearStart, String yearEnd){
 
         if(query != null && !query.isEmpty()) {
             QueryRecordEntry entry = new QueryRecordEntry(query, System.currentTimeMillis());
+            //log events analytics
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, SearchActivity.ANALYTICS_SEARCH_KEY);
+            bundle.putString(FirebaseAnalytics.Param.VALUE, query);
+            SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle);
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
