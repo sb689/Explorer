@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:add="http://schemas.android.com/tools">
+    android:background="@drawable/bg_galaxy_medium">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -3,8 +3,8 @@
 <!--    MainActivity-->
     <dimen name="search_criteria_label_height">30dp</dimen>
     <dimen name="search_criteria_label_width">100dp</dimen>
-    <dimen name="search_criteria_label_width_constraint">0.30</dimen>
-    <dimen name="search_criteria_edit_text_width_constraint">0.55</dimen>
+    <dimen name="search_criteria_label_width_constraint">0.40</dimen>
+    <dimen name="search_criteria_edit_text_width_constraint">0.40</dimen>
     <dimen name="search_criteria_edit_text_height">40dp</dimen>
     <dimen name="search_criteria_edit_text_margin_start">10dp</dimen>
     <dimen name="search_criteria_edit_text_ellipsize">30</dimen>

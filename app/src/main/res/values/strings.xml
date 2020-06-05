@@ -2,7 +2,7 @@
     <string name="app_name">Explorer</string>
 
     <!--    MainActivity-->
-    <string name="introduction">This application helps you to explore the image archives of NASA. Let\'s start to explore. </string>
+    <string name="introduction">This application helps you to explore the image archives of NASA. Let\'s explore. </string>
     <string name="label_query">Query</string>
     <string name="query_text">Milky way</string>
     <string name="label_start_year">Start year</string>

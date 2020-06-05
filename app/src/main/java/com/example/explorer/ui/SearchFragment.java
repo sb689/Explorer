@@ -4,10 +4,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +34,7 @@ import com.example.explorer.model.spaceResponse.SpaceResponse;
 import com.example.explorer.network.SpaceApiService;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,6 +107,36 @@ public class SearchFragment  extends Fragment {
             @Override
             public void onClick(View v) {
                 searchClicked();
+            }
+        });
+
+
+        mDataBinding.etQueryInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean isHandled = false;
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+        
+                    if(v == mDataBinding.etQueryInput) {
+                        mDataBinding.etQueryInput.clearFocus();
+                        mDataBinding.etStartYearInput.requestFocus();
+                        mDataBinding.etStartYearInput.setCursorVisible(true);
+                        isHandled = true;
+                    }
+                    else if(v == mDataBinding.etStartYearInput){
+                        mDataBinding.etStartYearInput.clearFocus();
+                        mDataBinding.etEndYearInput.requestFocus();
+                        mDataBinding.etEndYearInput.setCursorVisible(true);
+                        isHandled = true;
+                    }
+                }
+                else if(actionId == EditorInfo.IME_ACTION_GO){
+                    Log.d(TAG, "inside EditorInfo.IME_ACTION_GO, calling searchClicked");
+                    isHandled = true;
+                    searchClicked();
+                }
+                return isHandled;
+
             }
         });
         return mDataBinding.getRoot();
