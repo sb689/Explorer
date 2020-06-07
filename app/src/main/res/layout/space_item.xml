@@ -23,9 +23,8 @@
         tools:srcCompat="@tools:sample/avatars"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/item_image_content_desc"
-
-        />
+    />
+<!--    contentDescription set programmatically for imageView-->
 
     <TextView
         android:id="@+id/tv_title"

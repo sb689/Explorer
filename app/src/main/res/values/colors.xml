@@ -7,4 +7,5 @@
     <color name="RV_Background">#bdbdbd</color>
     <color name="detail_background">#263238</color>
     <color name="detail_text_color">#e0e0e0</color>
+    <color name="hint_color">#b0bec5</color>
 </resources>

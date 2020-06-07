@@ -8,18 +8,16 @@
         android:layout_height="match_parent"
         android:background="@android:color/black">
 
-
-
-    <ScrollView
+        <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:context=".DetailFragment"
 
         >
@@ -44,10 +42,10 @@
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintTop_toBottomOf="@+id/iv_detail_image"
             tools:text="Our Neighbor Andromeda"
-            android:layout_marginStart="@dimen/detail_group_margin_left"
-            android:layout_marginEnd="@dimen/detail_group_margin_left"
+            android:layout_marginStart="@dimen/detail_group_margin_start"
+            android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:layout_marginTop="20dp"
             android:textColor="@color/detail_text_color"
             />
@@ -77,7 +75,7 @@
             app:layout_constraintStart_toEndOf="@id/label_creator"
             app:layout_constraintTop_toTopOf="@id/label_creator"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="@dimen/detail_group_margin_left"
+            android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
 
@@ -102,8 +100,8 @@
             tools:text="25th February, 2010"
             app:layout_constraintStart_toEndOf="@id/label_date"
             app:layout_constraintTop_toTopOf="@id/label_date"
-            android:layout_marginStart="@dimen/detail_group_margin_left"
-            android:layout_marginEnd="@dimen/detail_group_margin_left"
+            android:layout_marginStart="@dimen/detail_group_margin_start"
+            android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
             />
@@ -115,8 +113,8 @@
             tools:text="This image was an observation of XYZ"
             app:layout_constraintStart_toStartOf="@id/label_date"
             app:layout_constraintTop_toBottomOf="@id/label_date"
-            android:layout_marginStart="@dimen/detail_group_margin_left"
-            android:layout_marginEnd="@dimen/detail_group_margin_left"
+            android:layout_marginStart="@dimen/detail_group_margin_start"
+            android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:layout_marginTop="16dp"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"

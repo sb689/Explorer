@@ -16,11 +16,7 @@
         android:background="@color/RV_Background"
         ads:layout_constraintTop_toTopOf="parent"
         ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintBottom_toTopOf="@+id/adView"
         />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

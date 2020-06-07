@@ -129,12 +129,15 @@ public class SearchFragment  extends Fragment {
                         mDataBinding.etEndYearInput.setCursorVisible(true);
                         isHandled = true;
                     }
+                    else if(v == mDataBinding.etEndYearInput){
+                        mDataBinding.etEndYearInput.clearFocus();
+                        mDataBinding.etEndYearInput.setCursorVisible(false);
+                        mDataBinding.buttonSearch.requestFocus();
+                        isHandled = true;
+                        searchClicked();
+                    }
                 }
-                else if(actionId == EditorInfo.IME_ACTION_GO){
-                    Log.d(TAG, "inside EditorInfo.IME_ACTION_GO, calling searchClicked");
-                    isHandled = true;
-                    searchClicked();
-                }
+
                 return isHandled;
 
             }

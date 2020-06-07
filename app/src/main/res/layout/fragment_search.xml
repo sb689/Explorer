@@ -6,7 +6,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment">
+    tools:context=".SearchFragment"
+   >
 
     <TextView
         android:id="@+id/label_intro"
@@ -16,12 +17,13 @@
         android:maxLines="4"
         android:padding="20dp"
         android:text="@string/introduction"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textAlignment="center"
+
         />
 
     <TextView
@@ -37,6 +39,8 @@
         android:layout_marginTop="80dp"
         android:layout_marginStart="20dp"
         android:textColor="@android:color/white"
+        android:labelFor="@+id/et_query_input"
+
         />
 
     <AutoCompleteTextView
@@ -46,6 +50,7 @@
         android:layout_marginStart="8dp"
         android:completionThreshold="1"
         android:hint="@string/query_text"
+        android:textColorHint="@color/hint_color"
         android:inputType="textVisiblePassword"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -54,6 +59,8 @@
         app:layout_constraintStart_toEndOf="@+id/label_query"
         app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
         android:imeOptions="actionNext"
+        android:nextFocusForward="@+id/et_start_year_input"
+
         />
 
     <TextView
@@ -69,6 +76,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:textColor="@android:color/white"
+        android:labelFor="@+id/et_start_year_input"
+
         />
 
     <AutoCompleteTextView
@@ -86,6 +95,9 @@
         app:layout_constraintTop_toTopOf="@+id/label_start_year"
         app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
         android:imeOptions="actionNext"
+        android:textColorHint="@color/hint_color"
+        android:nextFocusForward="@+id/et_end_year_input"
+
         />
 
     <TextView
@@ -101,6 +113,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:textColor="@android:color/white"
+        android:labelFor="@+id/et_end_year_input"
+
         />
 
     <AutoCompleteTextView
@@ -117,7 +131,11 @@
         app:layout_constraintStart_toEndOf="@+id/label_end_year"
         app:layout_constraintTop_toTopOf="@+id/label_end_year"
         app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
-        android:imeOptions="actionGo"/>
+        android:imeOptions="actionNext"
+        android:textColorHint="@color/hint_color"
+        android:nextFocusForward="@+id/button_search"
+
+        />
 
     <Button
         android:id="@+id/button_search"
@@ -128,7 +146,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_end_year"
         android:layout_marginTop="30dp"
-        android:onClick="searchClicked"
+        android:contentDescription="@string/button_search_content_description"
+
         />
 
     <ProgressBar
@@ -140,6 +159,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
         />
 
     <TextView
@@ -155,7 +175,9 @@
         android:text="@string/main_error_msg_general"
         android:textColor="@android:color/white"
         android:textAlignment="center"
-        android:padding="12dp"/>
+        android:padding="12dp"
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

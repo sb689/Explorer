@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.explorer.R;
 import com.example.explorer.databinding.SpaceItemBinding;
 
 import com.example.explorer.model.spaceResponse.Item;
@@ -75,6 +76,11 @@ public class SpaceItemListAdapter extends RecyclerView.Adapter<SpaceItemListAdap
             Picasso.get().load(imagePath).into(mDataBinding.ivSpaceImage);
             String imageTitle = mItemList.get(position).getData().get(0).getTitle();
             mDataBinding.tvTitle.setText(imageTitle);
+
+            String partialDesc = mDataBinding.getRoot().getContext().getString(R.string.item_image_content_desc
+                , imageTitle);
+            mDataBinding.ivSpaceImage.setContentDescription(partialDesc);
+
             String shortDesc = mItemList.get(position).getData().get(0).getDescription();
             mDataBinding.tvShortDesc.setText(shortDesc);
         }

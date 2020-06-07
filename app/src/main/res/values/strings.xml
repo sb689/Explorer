@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Explorer</string>
 
-    <!--    MainActivity-->
+<!--    common for all-->
+    <string name="group_of_focusable_content_inner_object">false</string>
+    <string name="group_of_focusable_content_object">true</string>
+
+
+    <!--    FragmentSearch-->
     <string name="introduction">This application helps you to explore the image archives of NASA. Let\'s explore. </string>
     <string name="label_query">Query</string>
     <string name="query_text">Milky way</string>
@@ -10,26 +15,32 @@
     <string name="label_end_year">End year</string>
     <string name="end_year_text">1990</string>
     <string name="button_search_text">Search</string>
+    <string name="button_search_content_description">Search</string>
     <string name="toast_search_criteria_required_msg">Please enter at least one of the search criteria</string>
     <string name="test_banner_unit_id">	ca-app-pub-3940256099942544/6300978111</string>
+    <string name="AdView_content_description">This is a advertisement</string>
+    <string name="progressBar_content_desc">Downloading data, please wait</string>
 
     <string name="main_error_msg_general">An error occurred. Please try later</string>
     <string name="main_error_msg">An error occurred. Please try later</string>
     <string name="main_error_msg_no_network">No network connection found. Please enable wifi or data connection and try again</string>
     <string name="main_error_msg_no_data_found">No result found. Please try with a different word or years</string>
-
-    <!--    SpaceItemsListActivity-->
-    <string name="item_image_content_desc">image of the searched item </string>
+    
 
 
-    <!--    SpaceDetailActivity-->
+    <!--    FragmentList-->
+    <string name="item_image_content_desc">This image is titled as %1$s</string>
+
+
+
+    <!--    FragmentDetail-->
     <string name="label_location_text">Location: </string>
     <string name="label_photographer_text">Secondary Creator Credit: </string>
     <string name="label_date_text">Date: </string>
 
     <string name="image_content">Image of the searched item</string>
-    <string name="next_arrow_content">Click here to go to next item</string>
-    <string name="back_arrow_content">Click here to go to previous item</string>
+    <string name="next_arrow_content">Next item</string>
+    <string name="back_arrow_content">Previous item</string>
 
 
 </resources>
