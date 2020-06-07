@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     android:background="@drawable/bg_galaxy_medium">
 
     <ScrollView
@@ -12,16 +11,43 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintBottom_toTopOf="@+id/iv_front_arrow"
+        android:paddingBottom="60dp"
         >
 
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+
+        />
 
     </ScrollView>
+
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:id="@+id/iv_front_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
+        android:background="@drawable/ic_chevron_right_24px"
+        android:contentDescription="@string/next_arrow_content"
+        android:visibility="gone"
+
+        />
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:id="@+id/iv_back_arrow"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/ic_chevron_left_24px"
+        android:contentDescription="@string/back_arrow_content"
+        android:visibility="gone"
+        />
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -40,7 +66,6 @@
 
     </com.google.android.gms.ads.AdView>
 
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

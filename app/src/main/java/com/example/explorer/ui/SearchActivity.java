@@ -1,15 +1,18 @@
 package com.example.explorer.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.explorer.R;
+import com.example.explorer.databinding.ActivitySearchBinding;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -30,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     private AdView mAdView;;
     private FrameLayout adContainerView;
     public static FirebaseAnalytics mFirebaseAnalytics;
+    private ActivitySearchBinding mDataBinding;
 
     public static int getmPosition() {
         return mPosition;
@@ -38,7 +42,9 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+
+
+        mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -53,6 +59,20 @@ public class SearchActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
+        mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextClicked();
+            }
+        });
+
+        mDataBinding.ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backClicked();
+            }
+        });
 
         if (savedInstanceState == null) {
             SearchFragment fragment = new SearchFragment();
@@ -86,45 +106,43 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-//    private void loadBanner() {
-//        // Create an ad request.
-//        adView = (AdView) findViewById(R.id.adView);
-//        adView.setAdUnitId(getString(R.string.test_banner_unit_id));
-//        //adContainerView.removeAllViews();
-////        adContainerView.addView(adView);
-//
-//        AdSize adSize = getAdSize();
-//        adView.setAdSize(adSize);
-//
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//
-//        // Start loading the ad in the background.
-//        adView.loadAd(adRequest);
-//    }
+    public void nextClicked(){
 
-    private AdSize getAdSize() {
-        // Determine the screen width (less decorations) to use for the ad width.
-        Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
+        int position = DetailFragment.mPosition;
 
-        float density = outMetrics.density;
-
-        float adWidthPixels = adContainerView.getWidth();
-
-        // If the ad hasn't been laid out, default to the full screen width.
-        if (adWidthPixels == 0) {
-            adWidthPixels = outMetrics.widthPixels;
-        }
-
-        int adWidth = (int) (adWidthPixels / density);
-        int orientation = getResources().getConfiguration().orientation;
-        if(orientation == Configuration.ORIENTATION_PORTRAIT){
-            return AdSize.getPortraitInlineAdaptiveBannerAdSize(this, adWidth);
+        if(position + 1 > DetailFragment.mItemList.size()-1){
+            position = 0;
         }else{
-            return AdSize.getLandscapeInlineAdaptiveBannerAdSize(this, adWidth);
+            position = position + 1;
         }
 
+        Log.d(TAG, "loading detail ui in nextClicked for position = " + mPosition);
+
+        DetailFragment.loadDetailUI(position);
+    }
+
+    public void backClicked(){
+
+        int position = DetailFragment.mPosition;
+
+        if(position - 1 < 0){
+            position = DetailFragment.mItemList.size() -1;
+        }
+        else{
+            position = position -1;
+        }
+        Log.d(TAG, "loading detail ui in backClicked for position = " + mPosition);
+        DetailFragment.loadDetailUI(position);
+    }
+
+    public void hideNavigationButtons(){
+        mDataBinding.ivFrontArrow.setVisibility(View.GONE);
+        mDataBinding.ivBackArrow.setVisibility(View.GONE);
+    }
+
+    public void showNavigationButtons(){
+        mDataBinding.ivFrontArrow.setVisibility(View.VISIBLE);
+        mDataBinding.ivBackArrow.setVisibility(View.VISIBLE);
     }
 
 }

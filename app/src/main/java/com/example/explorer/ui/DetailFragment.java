@@ -27,9 +27,9 @@ public class DetailFragment extends Fragment {
 
     private static final String TAG = DetailFragment.class.getSimpleName();
     private static FragmentDetailBinding mDataBinding;
-    private Item mSelectedItem;
-    private List<Item> mItemList;
-    private int mPosition;
+    private static Item mSelectedItem;
+    public static List<Item> mItemList;
+    public static int mPosition;
     private String mHighResolutionImagePath;
 
     @Nullable
@@ -46,29 +46,19 @@ public class DetailFragment extends Fragment {
                 mItemList = items;
                 mPosition = SearchActivity.getmPosition();
                 mSelectedItem = items.get(SearchActivity.getmPosition());
-                loadDetailUI();
+                loadDetailUI(mPosition);
             }
         });
 
-        mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextClicked();
-            }
-        });
 
-        mDataBinding.ivBackArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backClicked();
-            }
-        });
         return mDataBinding.getRoot();
     }
 
 
-    private void loadDetailUI() {
+    public static void loadDetailUI(int position) {
 
+        mSelectedItem = mItemList.get(position);
+        mPosition = position;
         mDataBinding.tvDetailTitle.setText(mSelectedItem.getData().get(0).getTitle());
 
         String imagePath = mSelectedItem.getLinks().get(0).getHref();
@@ -101,42 +91,20 @@ public class DetailFragment extends Fragment {
         // mDataBinding.pbDetail.setVisibility(View.INVISIBLE);
     }
 
-    public void nextClicked(){
 
-        if(mPosition + 1 > mItemList.size()-1){
-            mPosition = 0;
-        }else{
-            mPosition = mPosition + 1;
-        }
-        mSelectedItem = mItemList.get(mPosition);
-        Log.d(TAG, "loading detail ui in nextClicked for position = " + mPosition);
 
-        loadDetailUI();
-    }
-
-    public void backClicked(){
-
-        if(mPosition - 1 < 0){
-            mPosition = mItemList.size() -1;
-        }
-        else{
-            mPosition = mPosition -1;
-        }
-        mSelectedItem = mItemList.get(mPosition);
-        Log.d(TAG, "loading detail ui in backClicked for position = " + mPosition);
-        loadDetailUI();
-
-    }
 
     @Override
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((SearchActivity) requireActivity()).showNavigationButtons();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+        ((SearchActivity) requireActivity()).hideNavigationButtons();
     }
 }
