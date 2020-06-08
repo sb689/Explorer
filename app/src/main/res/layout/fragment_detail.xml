@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/sv_detail"
         android:background="@drawable/detail_backdrop_small"
-
+        android:paddingBottom="50dp"
         >
 
 
@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars"
-            android:layout_marginTop="50dp"
+
             />
 
 
