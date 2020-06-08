@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -260,6 +261,11 @@ public class SearchFragment  extends Fragment {
             showErrorMessage(ERROR_TAG_NO_NETWORK);
             return;
         }
+
+        //check if shotKeyboard is still open then close it
+        InputMethodManager imm = (InputMethodManager)
+                getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mDataBinding.getRoot().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
 
         mDataBinding.tvErrorMsg.setVisibility(View.INVISIBLE);
         String query = mDataBinding.etQueryInput.getText().length() > 0 ?

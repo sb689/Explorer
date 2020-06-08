@@ -143,6 +143,8 @@ public class SearchActivity extends AppCompatActivity {
     public void showNavigationButtons(){
         mDataBinding.ivFrontArrow.setVisibility(View.VISIBLE);
         mDataBinding.ivBackArrow.setVisibility(View.VISIBLE);
+        mDataBinding.ivFrontArrow.requestFocus();
+
     }
 
 }

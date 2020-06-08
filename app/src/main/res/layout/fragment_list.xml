@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ListFragment">
+    tools:context=".ListFragment"
+    android:layout_marginTop="40dp">
 
 
     <androidx.recyclerview.widget.RecyclerView

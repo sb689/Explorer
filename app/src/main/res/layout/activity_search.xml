@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/iv_front_arrow"
-        android:paddingBottom="60dp"
+        android:paddingBottom="45dp"
         >
 
 
@@ -26,28 +26,36 @@
     </ScrollView>
 
 
+
+
     <ImageView
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:id="@+id/iv_front_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/adView"
-        android:background="@drawable/ic_chevron_right_24px"
+        android:src="@drawable/button_arrow_right"
         android:contentDescription="@string/next_arrow_content"
         android:visibility="gone"
+        android:nextFocusForward="@+id/iv_back_arrow"
+       
 
         />
 
     <ImageView
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:id="@+id/iv_back_arrow"
         app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/ic_chevron_left_24px"
+       android:src="@drawable/button_arrow_left"
         android:contentDescription="@string/back_arrow_content"
         android:visibility="gone"
+        android:nextFocusForward="@+id/iv_front_arrow"
+
         />
+
+
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
