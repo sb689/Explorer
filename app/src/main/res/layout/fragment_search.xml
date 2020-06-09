@@ -36,10 +36,10 @@
         android:textAlignment="viewEnd"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_intro"
-        android:layout_marginTop="80dp"
         android:layout_marginStart="20dp"
         android:textColor="@android:color/white"
         android:labelFor="@+id/et_query_input"
+        android:layout_marginTop="@dimen/search_query_margin_top"
 
         />
 
@@ -156,7 +156,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_end_year"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/search_button_margin_top"
         android:contentDescription="@string/button_search_content_description"
         style="?android:attr/borderlessButtonStyle"
         android:nextFocusUp="@id/et_query_input"

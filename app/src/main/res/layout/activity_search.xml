@@ -7,15 +7,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_galaxy_medium">
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/cns_layout_navigation_buttons"-->
-<!--        android:id="@+id/sv_activity_fragment"-->
-<!--        >-->
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
@@ -26,8 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
 
         />
+    </ScrollView>
 
-<!--    </ScrollView>-->
 
 
 

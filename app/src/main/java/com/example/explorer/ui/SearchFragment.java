@@ -1,5 +1,6 @@
 package com.example.explorer.ui;
 
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -35,7 +36,6 @@ import com.example.explorer.model.spaceResponse.SpaceResponse;
 import com.example.explorer.network.SpaceApiService;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,16 +45,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.explorer.ui.SearchActivity.mFirebaseAnalytics;
+
 
 public class SearchFragment  extends Fragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
-    public static final String INTENT_EXTRA_QUERY = "intent_extra_query";
-    public static final String INTENT_EXTRA_START_YEAR = "intent_extra_start_year";
-    public static final String INTENT_EXTRA_END_YEAR = "intent_extra_end_year";
-    public static final String INTENT_EXTRA_SELECTED_POSITION = "intent_extra_selected_position";
+
     private static final int RECORD_THRESHOLD = 30;
     private static final int ERROR_TAG_NO_NETWORK = 1;
     private static final int ERROR_TAG_GENERAL = 2;
@@ -63,12 +60,13 @@ public class SearchFragment  extends Fragment {
     private static final String PARAM_MEDIA_TYPE = "image";
 
 
-    private FragmentSearchBinding mDataBinding;
+    private static FragmentSearchBinding mDataBinding;
     private Toast mToast;
     private AppDatabase mDb;
     private List<QueryRecordEntry> mQueryRecordHistory;
     private List<YearRecordEntry> mYearRecordHistory;
     private List<Item> mResponseData;
+    private static Context mContext;
 
     @Nullable
     @Override
@@ -143,6 +141,9 @@ public class SearchFragment  extends Fragment {
 
             }
         });
+
+
+        mContext = getContext();
         return mDataBinding.getRoot();
     }
 
@@ -229,21 +230,21 @@ public class SearchFragment  extends Fragment {
         mDataBinding.buttonSearch.setEnabled(true);
     }
 
-    private void showProgressBar(){
+    private static void showProgressBar(){
         mDataBinding.buttonSearch.setEnabled(false);
         mDataBinding.pbMain.setVisibility(View.VISIBLE);
     }
 
-    private void hideProgressBar(){
+    private static void hideProgressBar(){
         mDataBinding.pbMain.setVisibility(View.INVISIBLE);
         mDataBinding.buttonSearch.setEnabled(true);
 
     }
 
-    private boolean isNetworkConnected(){
+    private static boolean isNetworkConnected(){
 
         ConnectivityManager cm =
-                (ConnectivityManager)getActivity().getSystemService(getActivity().CONNECTIVITY_SERVICE);
+                (ConnectivityManager)mContext.getSystemService(mContext.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
@@ -255,8 +256,6 @@ public class SearchFragment  extends Fragment {
 
     public void searchClicked(){
 
-        Log.d(TAG, "inside searchClicked");
-        Log.d(TAG, "isNetworkConnected = " + isNetworkConnected());
         if(!isNetworkConnected()){
             showErrorMessage(ERROR_TAG_NO_NETWORK);
             return;

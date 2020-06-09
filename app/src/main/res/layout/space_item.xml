@@ -9,14 +9,14 @@
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
     android:layout_marginBottom="4dp"
-    android:background="@android:color/white"
+    android:background="@android:color/black"
     >
 
 
     <ImageView
         android:id="@+id/iv_space_image"
         android:layout_width="0dp"
-        app:layout_constraintWidth_percent=".40"
+        app:layout_constraintWidth_percent=".50"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
-        app:layout_constraintWidth_percent=".55"
+        app:layout_constraintWidth_percent=".45"
         android:layout_height="wrap_content"
         android:maxLines="3"
         android:ellipsize="end"
@@ -39,7 +39,8 @@
         android:layout_marginStart="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:layout_marginTop="10dp"
-        android:textSize="16sp"
+        android:textSize="17sp"
+        android:textColor="@android:color/white"
         />
 
     <TextView
@@ -53,7 +54,8 @@
         android:layout_marginTop="10dp"
         android:maxLines="4"
         android:ellipsize="end"
-        android:textSize="15sp"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
        />
 
 

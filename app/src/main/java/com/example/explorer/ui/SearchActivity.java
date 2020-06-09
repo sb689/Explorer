@@ -3,23 +3,28 @@ package com.example.explorer.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.content.res.Configuration;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
+
+import com.example.explorer.widget.WidgetUpdateWorker;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
+
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -74,11 +79,25 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         if (savedInstanceState == null) {
+            //schedule widget updater
+            PeriodicWorkRequest dailyUpdateRequest =
+                    new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
+                            .build();
+            WorkManager.getInstance(getApplicationContext())
+                    .enqueueUniquePeriodicWork(WidgetUpdateWorker.class.getName(),
+                            ExistingPeriodicWorkPolicy.KEEP,
+                            dailyUpdateRequest);
+
             SearchFragment fragment = new SearchFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, fragment, SearchFragment.TAG).commit();
         }
+
+
 
     }
 
@@ -95,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void showDetail(int position){
-        Log.d(TAG, "item clicked received in showDetail" );
+
         mPosition = position;
         DetailFragment detailFragment = new DetailFragment();
         getSupportFragmentManager()
@@ -116,8 +135,6 @@ public class SearchActivity extends AppCompatActivity {
             position = position + 1;
         }
 
-        Log.d(TAG, "loading detail ui in nextClicked for position = " + mPosition);
-
         DetailFragment.loadDetailUI(position);
     }
 
@@ -131,7 +148,7 @@ public class SearchActivity extends AppCompatActivity {
         else{
             position = position -1;
         }
-        Log.d(TAG, "loading detail ui in backClicked for position = " + mPosition);
+
         DetailFragment.loadDetailUI(position);
     }
 
@@ -146,5 +163,9 @@ public class SearchActivity extends AppCompatActivity {
         mDataBinding.ivFrontArrow.requestFocus();
 
     }
+
+
+
+
 
 }

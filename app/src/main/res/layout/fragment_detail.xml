@@ -56,13 +56,14 @@
             android:id="@+id/label_creator"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent=".45"
+            app:layout_constraintWidth_percent="@dimen/label_creator_width_percent"
             android:text="@string/label_photographer_text"
             app:layout_constraintStart_toStartOf="@id/tv_detail_title"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_title"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
+            android:maxLines="2"
 
             />
 
@@ -70,15 +71,17 @@
             android:id="@+id/tv_creator"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent=".53"
+            app:layout_constraintWidth_percent="@dimen/tv_creator_width_percent"
             tools:text="NASA/ University of California/ University of Florida"
             android:maxLines="3"
             app:layout_constraintStart_toEndOf="@id/label_creator"
             app:layout_constraintTop_toTopOf="@id/label_creator"
-            android:layout_marginStart="5dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/label_creator"
+            android:layout_marginStart="0dp"
             android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
+            android:textAlignment="textStart"
 
             />
 
@@ -89,7 +92,7 @@
             android:text="@string/label_date_text"
             app:layout_constraintStart_toStartOf="@id/label_creator"
             app:layout_constraintTop_toBottomOf="@id/tv_creator"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
             />
