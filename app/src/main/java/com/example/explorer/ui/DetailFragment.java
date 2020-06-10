@@ -25,12 +25,12 @@ import java.util.List;
 
 public class DetailFragment extends Fragment {
 
-    private static final String TAG = DetailFragment.class.getSimpleName();
+    public static final String TAG = DetailFragment.class.getSimpleName();
     private static FragmentDetailBinding mDataBinding;
     private static Item mSelectedItem;
     public static List<Item> mItemList;
     public static int mPosition;
-    private String mHighResolutionImagePath;
+
 
     @Nullable
     @Override
@@ -38,18 +38,25 @@ public class DetailFragment extends Fragment {
 
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
 
-        SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
-        viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> items) {
-                viewModel.getItemList().removeObserver(this);
-                mItemList = items;
-                mPosition = SearchActivity.getmPosition();
-                mSelectedItem = items.get(SearchActivity.getmPosition());
-                loadDetailUI(mPosition);
-            }
-        });
 
+            SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
+            viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
+                @Override
+                public void onChanged(List<Item> items) {
+                    viewModel.getItemList().removeObserver(this);
+                    mItemList = items;
+
+
+                }
+            });
+
+        if(savedInstanceState == null){
+            mPosition = SearchActivity.getmPosition();
+        }else{
+            mPosition = savedInstanceState.getInt(getString(R.string.saved_instance_bundle_key));
+        }
+        mSelectedItem = mItemList.get(mPosition);
+        loadDetailUI(mPosition);
 
         return mDataBinding.getRoot();
     }
@@ -72,27 +79,8 @@ public class DetailFragment extends Fragment {
         mDataBinding.tvDate.setText(mSelectedItem.getData().get(0).getDate_created());
         mDataBinding.tvDescription.setText(mSelectedItem.getData().get(0).getDescription());
 
-//        ImageViewModelFactory factory = new ImageViewModelFactory(mSelectedItem.getData().get(0).getNasa_id());
-//        ImageViewModel viewModel = new ViewModelProvider(this, factory).get(ImageViewModel.class);
-//        viewModel.getImages().observe(this, new Observer<List<ImageLinkObj>>() {
-//            @Override
-//            public void onChanged(List<ImageLinkObj> imageLinkObjs) {
-//                if(imageLinkObjs == null){
-//                    String imagePath = mSelectedItem.getLinks().get(0).getHref();
-//                    Picasso.get().load(imagePath).into(mDataBinding.ivDetailImage);
-//                }else{
-//                    Log.d(TAG, ":::::::::::::: loadDetailUI, imageLinks size = " + imageLinkObjs.size());
-//                    String imagePath = imageLinkObjs.get(1).getHref();
-//                    Log.d(TAG, ":::::::::::::: imagePath selected = " + imagePath);
-//                    Picasso.get().load(imagePath).into(mDataBinding.ivDetailImage);
-//                }
-//            }
-//        });
-        // mDataBinding.pbDetail.setVisibility(View.INVISIBLE);
+
     }
-
-
-
 
     @Override
     public void onResume() {
@@ -106,5 +94,11 @@ public class DetailFragment extends Fragment {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
         ((SearchActivity) requireActivity()).hideNavigationButtons();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(getString(R.string.saved_instance_bundle_key), mPosition);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.explorer.ui;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -9,8 +10,8 @@ import androidx.work.WorkManager;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
@@ -30,15 +31,14 @@ import java.util.concurrent.TimeUnit;
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
-    public static final String ANALYTICS_SEARCH_KEY = "search_key";
-    public static final String ANALYTICS_SELECTED_RESPONSE = "search_item_selected";
+
 
 
     public static int mPosition;
     private AdView mAdView;;
-    private FrameLayout adContainerView;
     public static FirebaseAnalytics mFirebaseAnalytics;
     private ActivitySearchBinding mDataBinding;
+
 
     public static int getmPosition() {
         return mPosition;
@@ -79,24 +79,25 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+         if (savedInstanceState == null) {
 
-
-
-        if (savedInstanceState == null) {
             //schedule widget updater
             PeriodicWorkRequest dailyUpdateRequest =
-                    new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
+                    new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 3, TimeUnit.MINUTES)
                             .build();
             WorkManager.getInstance(getApplicationContext())
                     .enqueueUniquePeriodicWork(WidgetUpdateWorker.class.getName(),
-                            ExistingPeriodicWorkPolicy.KEEP,
+                            ExistingPeriodicWorkPolicy.REPLACE,
                             dailyUpdateRequest);
 
             SearchFragment fragment = new SearchFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, fragment, SearchFragment.TAG).commit();
-        }
 
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+
+        }
 
 
     }
@@ -106,24 +107,28 @@ public class SearchActivity extends AppCompatActivity {
 
         ListFragment listFragment = new ListFragment();
 
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack("listFragment")
-                .replace(R.id.fragment_container,
-                        listFragment, null).commit();
+                .replace(R.id.fragment_container, listFragment, null)
+                .addToBackStack(listFragment.getClass().getSimpleName())
+                .commit();
     }
+
 
     public void showDetail(int position){
 
         mPosition = position;
         DetailFragment detailFragment = new DetailFragment();
+
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack("detailFragment")
                 .replace(R.id.fragment_container,
-                        detailFragment).commit();
-
+                        detailFragment)
+                .addToBackStack(detailFragment.getClass().getSimpleName())
+                .commit();
     }
+
 
     public void nextClicked(){
 
@@ -163,9 +168,6 @@ public class SearchActivity extends AppCompatActivity {
         mDataBinding.ivFrontArrow.requestFocus();
 
     }
-
-
-
 
 
 }

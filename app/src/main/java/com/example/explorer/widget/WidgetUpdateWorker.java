@@ -13,6 +13,7 @@ public class WidgetUpdateWorker extends Worker {
 
     private static final String TAG =  WidgetUpdateWorker.class.getSimpleName();
 
+
     private Context mContext;
     public WidgetUpdateWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -24,12 +25,12 @@ public class WidgetUpdateWorker extends Worker {
     public Result doWork() {
 
         Log.d(TAG, "::::::::::called updateWidgetWorker doWork");
-        WidgetUpdateService.startActionUpdateWidget(mContext);
+        WidgetUpdateHelper helper = new WidgetUpdateHelper(mContext);
+        helper.getImageForTheDay();
+
         return Result.success();
 
     }
-
-
 
 
 }

@@ -21,6 +21,10 @@
     <string name="AdView_content_description">This is a advertisement</string>
     <string name="progressBar_content_desc">Downloading data, please wait</string>
 
+    <string name="analytics_search_key">search_key</string>
+    <string name="analytics_selected_response">search_item_selected</string>
+    <string name="saved_instance_bundle_fragment_key">last_fragment_displayed</string>
+
     <string name="main_error_msg_general">An error occurred. Please try later</string>
     <string name="main_error_msg">An error occurred. Please try later</string>
     <string name="main_error_msg_no_network">No network connection found. Please enable wifi or data connection and try again</string>
@@ -49,6 +53,7 @@
     <string name="back_arrow_content">Previous item</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="saved_instance_bundle_key">item_position</string>
 
 <!--    Widget-->
     <string name="widget_image_content_desc">this is an image for explorer widget application</string>

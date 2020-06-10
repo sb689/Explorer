@@ -340,7 +340,7 @@ public class SearchFragment  extends Fragment {
             QueryRecordEntry entry = new QueryRecordEntry(query, System.currentTimeMillis());
             //log events analytics
             Bundle bundle = new Bundle();
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, SearchActivity.ANALYTICS_SEARCH_KEY);
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, getString(R.string.analytics_search_key));
             bundle.putString(FirebaseAnalytics.Param.VALUE, query);
             SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SEARCH, bundle);
             AppExecutors.getInstance().diskIO().execute(new Runnable() {

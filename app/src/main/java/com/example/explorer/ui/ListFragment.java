@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ListFragment extends Fragment implements SpaceItemListAdapter.itemClickedListener {
 
-    private static final String TAG = ListFragment.class.getSimpleName();
+    public static final String TAG = ListFragment.class.getSimpleName();
     private FragmentListBinding mDataBinding;
     private SpaceItemListAdapter mAdapter;
 
@@ -65,7 +65,7 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
 
         //log events analytics
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, SearchActivity.ANALYTICS_SELECTED_RESPONSE);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, getString(R.string.analytics_selected_response));
         bundle.putString(FirebaseAnalytics.Param.VALUE, Integer.toString(position));
         SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
         ((SearchActivity) requireActivity()).showDetail(position);
