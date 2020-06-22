@@ -1,5 +1,6 @@
 package com.example.explorer.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class DetailFragment extends Fragment {
     private static Item mSelectedItem;
     public static List<Item> mItemList;
     public static int mPosition;
+    private static Context mContext;
 
 
     @Nullable
@@ -37,7 +39,7 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
-
+        mContext = getActivity();
 
             SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
             viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
@@ -73,8 +75,9 @@ public class DetailFragment extends Fragment {
 
         String creator = mSelectedItem.getData().get(0).getSecondary_creator();
         if(creator == null || creator.isEmpty()){
-            creator = "N/A";
+            creator = mContext.getString(R.string.secondary_creator_na);
         }
+        
         mDataBinding.tvCreator.setText(creator);
         mDataBinding.tvDate.setText(mSelectedItem.getData().get(0).getDate_created());
         mDataBinding.tvDescription.setText(mSelectedItem.getData().get(0).getDescription());
