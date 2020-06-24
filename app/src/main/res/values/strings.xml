@@ -55,8 +55,9 @@
     <string name="add_widget">Add widget</string>
     <string name="saved_instance_bundle_key">item_position</string>
     <string name="secondary_creator_na">N/A</string>
+    <string name="bundle_key_detail_item_position">item_position</string>
 
-<!--    Widget-->
+    <!--    Widget-->
     <string name="widget_image_content_desc">this is an image for explorer widget application</string>
     <string name="image_sunday">https://images-assets.nasa.gov/image/KSC-02pp0471/KSC-02pp0471~small.jpg</string>
     <string name="image_monday">https://images-assets.nasa.gov/image/PIA00114/PIA00114~small.jpg</string>
@@ -68,9 +69,11 @@
     <string name="image_default">https://images-assets.nasa.gov/image/AFRC2017-0233-007/AFRC2017-0233-007~thumb.jpg</string>
     <string name="name_saved_widget_image_file">explorer_widget.png</string>
 
-<!--    Worker-->
+    <!--    Worker-->
     <string name="shared_pref_id">com.example.explorer.sharedPref</string>
     <string name="shared_pref_file_name_key">shared_pref_file_name_key</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

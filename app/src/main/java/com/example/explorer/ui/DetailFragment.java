@@ -27,12 +27,47 @@ import java.util.List;
 public class DetailFragment extends Fragment {
 
     public static final String TAG = DetailFragment.class.getSimpleName();
+    private static final String BUNDLE_POSITION_KEY = "item_position";
+
     private static FragmentDetailBinding mDataBinding;
     private static Item mSelectedItem;
     public static List<Item> mItemList;
     public static int mPosition;
     private static Context mContext;
 
+
+    public static DetailFragment newInstance(int position){
+        DetailFragment fragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(BUNDLE_POSITION_KEY, position);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
+        viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                viewModel.getItemList().removeObserver(this);
+                mItemList = items;
+            }
+        });
+
+        if(getArguments().containsKey(BUNDLE_POSITION_KEY)){
+            mPosition = getArguments().getInt(BUNDLE_POSITION_KEY);
+        }
+
+        if(savedInstanceState == null){
+            mPosition = SearchActivity.getmPosition();
+        }else{
+            mPosition = savedInstanceState.getInt(getString(R.string.saved_instance_bundle_key));
+        }
+        mSelectedItem = mItemList.get(mPosition);
+    }
 
     @Nullable
     @Override
@@ -41,23 +76,7 @@ public class DetailFragment extends Fragment {
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
         mContext = getActivity();
 
-            SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
-            viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
-                @Override
-                public void onChanged(List<Item> items) {
-                    viewModel.getItemList().removeObserver(this);
-                    mItemList = items;
 
-
-                }
-            });
-
-        if(savedInstanceState == null){
-            mPosition = SearchActivity.getmPosition();
-        }else{
-            mPosition = savedInstanceState.getInt(getString(R.string.saved_instance_bundle_key));
-        }
-        mSelectedItem = mItemList.get(mPosition);
         loadDetailUI(mPosition);
 
         return mDataBinding.getRoot();

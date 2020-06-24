@@ -7,12 +7,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/sv_detail"
         android:background="@drawable/detail_backdrop_small"
-        android:paddingBottom="50dp"
         >
 
 
@@ -121,7 +120,7 @@
             android:layout_marginStart="@dimen/detail_group_margin_start"
             android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:layout_marginTop="16dp"
-            android:paddingBottom="90dp"
+
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
 
@@ -130,4 +129,11 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+
+
+
+
+
+
 </layout>

@@ -119,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
     public void showDetail(int position){
 
         mPosition = position;
-        DetailFragment detailFragment = new DetailFragment();
+        DetailFragment detailFragment = DetailFragment.newInstance(position);
 
         getSupportFragmentManager()
                 .beginTransaction()
