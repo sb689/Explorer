@@ -124,38 +124,23 @@ public class SearchActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container,
-                        detailFragment)
+                        detailFragment, detailFragment.TAG)
                 .addToBackStack(detailFragment.getClass().getSimpleName())
                 .commit();
     }
 
 
     public void nextClicked(){
-
-        int position = DetailFragment.mPosition;
-
-        if(position + 1 > DetailFragment.mItemList.size()-1){
-            position = 0;
-        }else{
-            position = position + 1;
-        }
-
-        DetailFragment.loadDetailUI(position);
+        DetailFragment fragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+        fragment.showNextItem();
     }
+
 
     public void backClicked(){
-
-        int position = DetailFragment.mPosition;
-
-        if(position - 1 < 0){
-            position = DetailFragment.mItemList.size() -1;
-        }
-        else{
-            position = position -1;
-        }
-
-        DetailFragment.loadDetailUI(position);
+        DetailFragment fragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+      fragment.showPrevItem();
     }
+
 
     public void hideNavigationButtons(){
         mDataBinding.ivFrontArrow.setVisibility(View.GONE);

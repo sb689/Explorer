@@ -104,6 +104,34 @@ public class DetailFragment extends Fragment {
 
     }
 
+    public void showNextItem(){
+
+        int position = mPosition;
+
+        if(position + 1 > mItemList.size()-1){
+            position = 0;
+        }else{
+            position = position + 1;
+        }
+
+        loadDetailUI(position);
+    }
+
+    public void showPrevItem(){
+
+        int position = mPosition;
+
+        if(position - 1 < 0){
+            position = mItemList.size() -1;
+        }
+        else{
+            position = position -1;
+        }
+
+        loadDetailUI(position);
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
