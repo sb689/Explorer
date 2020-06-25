@@ -81,14 +81,6 @@ public class SearchActivity extends AppCompatActivity {
 
          if (savedInstanceState == null) {
 
-            //schedule widget updater
-            PeriodicWorkRequest dailyUpdateRequest =
-                    new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 3, TimeUnit.MINUTES)
-                            .build();
-            WorkManager.getInstance(getApplicationContext())
-                    .enqueueUniquePeriodicWork(WidgetUpdateWorker.class.getName(),
-                            ExistingPeriodicWorkPolicy.REPLACE,
-                            dailyUpdateRequest);
 
             SearchFragment fragment = new SearchFragment();
 
@@ -98,7 +90,6 @@ public class SearchActivity extends AppCompatActivity {
                     .commit();
 
         }
-
 
     }
 

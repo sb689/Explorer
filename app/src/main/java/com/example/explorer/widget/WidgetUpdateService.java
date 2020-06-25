@@ -5,11 +5,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
-import java.util.concurrent.TimeUnit;
 
 public class WidgetUpdateService extends IntentService {
 
