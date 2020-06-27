@@ -19,14 +19,16 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = ExplorerWidgetProvider.class.getSimpleName();
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, Bitmap bitmap) {
 
-//        CharSequence widgetText = context.getString(R.string.app_name);
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int appWidgetId, Bitmap bitmap, String assetId) {
+
         // Construct the RemoteViews object
         Log.d(TAG, "inside updateAppWidget, setting widget image");
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.explorer_widget);
         Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra(context.getString(R.string.widget_intent_asset_id_key), assetId);
+        intent.setAction(context.getString(R.string.widget_action_detail_view));
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
                 0,
@@ -37,8 +39,6 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
             views.setImageViewBitmap(R.id.iv_widget, bitmap);
         }
         views.setOnClickPendingIntent(R.id.iv_widget, pendingIntent);
-//      views.setTextViewText(R.id.tv_widget, widgetText);
-
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -56,10 +56,10 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
     }
 
     public static void updateExplorerWidget(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds,
-                                            Bitmap bitmap){
+                                            Bitmap bitmap, String assetId){
 
         for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId, bitmap);
+            updateAppWidget(context, appWidgetManager, appWidgetId, bitmap, assetId);
         }
     }
 

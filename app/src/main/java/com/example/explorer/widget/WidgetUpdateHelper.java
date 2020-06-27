@@ -28,41 +28,27 @@ public class WidgetUpdateHelper {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        String imageURlStr = "";
 
-        switch (dayOfWeek){
-            case 1: imageURlStr =   mContext.getString(R.string.image_sunday);
+        String[] assetIds = mContext.getResources().getStringArray(R.array.asset_ids);
+        String[] imageUrls = mContext.getResources().getStringArray(R.array.image_urls);
+        String imageURlStr = imageUrls[dayOfWeek-1];
+        String assetId = assetIds[dayOfWeek-1];
 
-                break;
-            case 2: imageURlStr =  mContext.getString(R.string.image_monday);
-                break;
-            case 3: imageURlStr =  mContext.getString(R.string.image_tuesday);
-                break;
-            case 4: imageURlStr =   mContext.getString(R.string.image_wednesday);
-                break;
-            case 5: imageURlStr =   mContext.getString(R.string.image_thursday);
-                break;
-            case 6: imageURlStr =   mContext.getString(R.string.image_friday);
-                break;
-            case 7: imageURlStr =  mContext.getString(R.string.image_saturday);
-                break;
-            default: imageURlStr =   mContext.getString(R.string.image_default);
-        }
 
         //now download the image from network
         Bitmap bitmap =  downloadImageBitmap(imageURlStr);
 
         Log.d(TAG, "imageURl chosen is = "+ imageURlStr);
-        setImageToWidget(bitmap);
+        setImageToWidget(bitmap, assetId);
     }
 
 
-    public void setImageToWidget(Bitmap bitmap){
+    public void setImageToWidget(Bitmap bitmap, String assetId){
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, ExplorerWidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.iv_widget);
-        ExplorerWidgetProvider.updateExplorerWidget( mContext, appWidgetManager, appWidgetIds, bitmap);
+        ExplorerWidgetProvider.updateExplorerWidget( mContext, appWidgetManager, appWidgetIds, bitmap, assetId);
 
     }
 
@@ -80,4 +66,27 @@ public class WidgetUpdateHelper {
 
         return bitmap;
     }
+
+//    public void populateDataForWidget() {
+//
+//        String[] assetIds = mContext.getResources().getStringArray(R.array.asset_ids);
+//        String[] imageUrls = mContext.getResources().getStringArray(R.array.image_urls);
+//        List<AssetEntry> assetList = new ArrayList<>();
+//
+//        for (int i = 0; i < assetIds.length; i++) {
+//            AssetEntry assetEntry = new AssetEntry(assetIds[i], imageUrls[i]);
+//            assetList.add(assetEntry);
+//        }
+//
+//        AppDatabase db = AppDatabase.getInstance(mContext);
+//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                for(int i = 0; i < assetList.size(); i++) {
+//                    db.AssetDao().insertAsset(assetList.get(i));
+//                }
+//            }
+//        });
+//
+//    }
 }

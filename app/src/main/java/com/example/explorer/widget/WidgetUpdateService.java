@@ -32,7 +32,6 @@ public class WidgetUpdateService extends IntentService {
                 WidgetUpdateHelper helper = new WidgetUpdateHelper(this);
                 helper.getImageForTheDay();
 
-
             }
         }
 

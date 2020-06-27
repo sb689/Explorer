@@ -33,6 +33,7 @@ import com.example.explorer.model.SpaceViewModel2;
 import com.example.explorer.model.YearViewModel;
 import com.example.explorer.model.spaceResponse.Item;
 import com.example.explorer.model.spaceResponse.SpaceResponse;
+import com.example.explorer.network.NetworkUtils;
 import com.example.explorer.network.SpaceApiService;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -53,11 +54,8 @@ public class SearchFragment  extends Fragment {
 
 
     private static final int RECORD_THRESHOLD = 30;
-    private static final int ERROR_TAG_NO_NETWORK = 1;
-    private static final int ERROR_TAG_GENERAL = 2;
-    private static final int ERROR_TAG_NO_DATA_FOUND = 3;
-    private static final String BASE_URL = "https://images-api.nasa.gov/";
-    private static final String PARAM_MEDIA_TYPE = "image";
+
+
 
 
     private static FragmentSearchBinding mDataBinding;
@@ -241,23 +239,13 @@ public class SearchFragment  extends Fragment {
 
     }
 
-    private static boolean isNetworkConnected(){
 
-        ConnectivityManager cm =
-                (ConnectivityManager)mContext.getSystemService(mContext.CONNECTIVITY_SERVICE);
-
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnected();
-
-        return isConnected;
-    }
 
 
     public void searchClicked(){
 
-        if(!isNetworkConnected()){
-            showErrorMessage(ERROR_TAG_NO_NETWORK);
+        if(!NetworkUtils.isNetworkConnected(getContext())){
+            showErrorMessage(NetworkUtils.ERROR_TAG_NO_NETWORK);
             return;
         }
 
@@ -283,12 +271,13 @@ public class SearchFragment  extends Fragment {
         } else{
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(SpaceApiService.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             SpaceApiService service = retrofit.create(SpaceApiService.class);
             showProgressBar();
-            Call<SpaceResponse> call = service.getResult(query, yearStart, yearEnd, PARAM_MEDIA_TYPE);
+            Call<SpaceResponse> call = service.getResult(query, yearStart, yearEnd,
+                    SpaceApiService.PARAM_MEDIA_TYPE);
 
             call.enqueue(new Callback<SpaceResponse>() {
                 @Override
@@ -311,7 +300,7 @@ public class SearchFragment  extends Fragment {
                             ((SearchActivity) requireActivity()).showSearchResponseList();
                         }
                         else{
-                            showErrorMessage(ERROR_TAG_NO_DATA_FOUND);
+                            showErrorMessage(NetworkUtils.ERROR_TAG_NO_DATA_FOUND);
                         }
                     } else {
 
@@ -322,7 +311,7 @@ public class SearchFragment  extends Fragment {
 
                 @Override
                 public void onFailure(Call<SpaceResponse> call, Throwable t) {
-                    showErrorMessage(ERROR_TAG_GENERAL);
+                    showErrorMessage(NetworkUtils.ERROR_TAG_GENERAL);
                     Log.d(TAG, ":::::::::::::: retrofit call failed, ");
                     Log.d(TAG, ":::::::::::::: retrofit call failed, " + t.getMessage());
 

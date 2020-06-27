@@ -1,22 +1,15 @@
 package com.example.explorer.ui;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
-
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
-
-import com.example.explorer.widget.WidgetUpdateWorker;
 import com.google.android.gms.ads.AdRequest;
 
 import com.google.android.gms.ads.AdView;
@@ -25,19 +18,21 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.concurrent.TimeUnit;
 
 
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
-
+    private static final String SHARED_PREF_ASSET_STAT = "asset.status";
+    private static final String SHARED_PREF_NAME = "com.example.explorer.shared.pref";
+    private static final String SAVED_INSTANCE_ASSET_ID_KEY = "asset_id_key";
 
 
     public static int mPosition;
     private AdView mAdView;;
     public static FirebaseAnalytics mFirebaseAnalytics;
     private ActivitySearchBinding mDataBinding;
+    private String mAssetId;
 
 
     public static int getmPosition() {
@@ -79,25 +74,33 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-         if (savedInstanceState == null) {
 
+        if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) )
+        {
+            Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is detail view");
+            mAssetId = getIntent().getStringExtra(getString(R.string.widget_intent_asset_id_key));
+            showDetailForAsset(mAssetId);
 
-            SearchFragment fragment = new SearchFragment();
+        }
+        else if(savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_ASSET_ID_KEY)){
+            mAssetId = savedInstanceState.getString(SAVED_INSTANCE_ASSET_ID_KEY);
+            showDetailForAsset(mAssetId);
 
-            getSupportFragmentManager()
+        }
+        else if (savedInstanceState == null) {
+            Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is null, loading SearchFragment");
+             SearchFragment fragment = new SearchFragment();
+             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
-
-        }
-
+         }
     }
 
 
     public void showSearchResponseList(){
 
         ListFragment listFragment = new ListFragment();
-
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -107,6 +110,22 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
+    private void showDetailForAsset(String assetId){
+        DetailFragment detailFragment = DetailFragment.newInstance(assetId);
+
+        SearchFragment fragment = new SearchFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, detailFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void showDetail(int position){
 
         mPosition = position;
@@ -115,21 +134,31 @@ public class SearchActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container,
-                        detailFragment, detailFragment.TAG)
-                .addToBackStack(detailFragment.getClass().getSimpleName())
+                        detailFragment, DetailFragment.TAG)
+                .addToBackStack(DetailFragment.TAG)
                 .commit();
     }
 
 
     public void nextClicked(){
+        Log.d(TAG, "::::::::::::::: nextClicked rcvd");
         DetailFragment fragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+        if(fragment == null)
+        {
+            Log.d(TAG, "::::::::::::::: fragment is null");
+        }
         fragment.showNextItem();
     }
 
 
     public void backClicked(){
+        Log.d(TAG, "::::::::::::::: backClicked rcvd");
         DetailFragment fragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
-      fragment.showPrevItem();
+        if(fragment == null)
+        {
+            Log.d(TAG, "::::::::::::::: fragment is null");
+        }
+        fragment.showPrevItem();
     }
 
 
@@ -143,7 +172,15 @@ public class SearchActivity extends AppCompatActivity {
         mDataBinding.ivBackArrow.setVisibility(View.VISIBLE);
         mDataBinding.ivFrontArrow.requestFocus();
 
+
+
     }
 
-
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if( mAssetId != null && !mAssetId.isEmpty()){
+            outState.putString(SAVED_INSTANCE_ASSET_ID_KEY, mAssetId);
+        }
+        super.onSaveInstanceState(outState);
+    }
 }

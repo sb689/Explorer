@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/sv_detail"
         android:background="@drawable/detail_backdrop_small"
+        android:paddingBottom="90dp"
         >
 
 
@@ -125,6 +126,39 @@
             android:textColor="@color/detail_text_color"
 
             />
+
+
+        <ProgressBar
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:id="@+id/pb_detail"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_detail_error_msg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:text="@string/main_error_msg_general"
+            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:padding="12dp"
+
+            />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
