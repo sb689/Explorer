@@ -19,7 +19,6 @@ import com.example.explorer.R;
 
 import com.example.explorer.databinding.FragmentDetailBinding;
 
-import com.example.explorer.model.AssetViewModel;
 import com.example.explorer.model.SpaceViewModel2;
 import com.example.explorer.model.spaceResponse.Item;
 import com.example.explorer.model.spaceResponse.SpaceResponse;

@@ -67,26 +67,5 @@ public class WidgetUpdateHelper {
         return bitmap;
     }
 
-//    public void populateDataForWidget() {
-//
-//        String[] assetIds = mContext.getResources().getStringArray(R.array.asset_ids);
-//        String[] imageUrls = mContext.getResources().getStringArray(R.array.image_urls);
-//        List<AssetEntry> assetList = new ArrayList<>();
-//
-//        for (int i = 0; i < assetIds.length; i++) {
-//            AssetEntry assetEntry = new AssetEntry(assetIds[i], imageUrls[i]);
-//            assetList.add(assetEntry);
-//        }
-//
-//        AppDatabase db = AppDatabase.getInstance(mContext);
-//        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                for(int i = 0; i < assetList.size(); i++) {
-//                    db.AssetDao().insertAsset(assetList.get(i));
-//                }
-//            }
-//        });
-//
-//    }
+
 }

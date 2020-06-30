@@ -5,6 +5,13 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class WidgetUpdateService extends IntentService {
@@ -15,7 +22,7 @@ public class WidgetUpdateService extends IntentService {
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
-     * @param name Used to name the worker thread, important only for debugging.
+     *
      */
     public WidgetUpdateService() {
 
@@ -31,6 +38,21 @@ public class WidgetUpdateService extends IntentService {
             if(ACTION_UPDATE_WIDGET.equals(action)){
                 WidgetUpdateHelper helper = new WidgetUpdateHelper(this);
                 helper.getImageForTheDay();
+
+
+                Constraints constraints = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+
+                PeriodicWorkRequest saveRequest =
+                        new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
+                                .setConstraints(constraints)
+                                .build();
+
+                WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
+                        WidgetUpdateWorker.class.getSimpleName(),
+                        ExistingPeriodicWorkPolicy.KEEP,
+                        saveRequest);
 
             }
         }
