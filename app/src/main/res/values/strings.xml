@@ -60,20 +60,12 @@
     <!--    Widget-->
     <string name="widget_action_detail_view">detail_view</string>
     <string name="widget_image_content_desc">this is an image for explorer widget application</string>
-<!--    <string name="image_sunday">https://images-assets.nasa.gov/image/KSC-02pp0471/KSC-02pp0471~small.jpg</string>-->
-<!--    <string name="image_monday">https://images-assets.nasa.gov/image/PIA00114/PIA00114~small.jpg</string>-->
-<!--    <string name="image_tuesday">https://images-assets.nasa.gov/image/PIA07901/PIA07901~thumb.jpg</string>-->
-<!--    <string name="image_wednesday">https://images-assets.nasa.gov/image/PIA04224/PIA04224~thumb.jpg</string>-->
-<!--    <string name="image_thursday">https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000492/GSFC_20171208_Archive_e000492~thumb.jpg</string>-->
-<!--    <string name="image_friday">https://images-assets.nasa.gov/image/PIA15427/PIA15427~thumb.jpg</string>-->
-<!--    <string name="image_saturday">https://images-assets.nasa.gov/image/PIA01966/PIA01966~thumb.jpg</string>-->
-<!--    <string name="image_default">https://images-assets.nasa.gov/image/AFRC2017-0233-007/AFRC2017-0233-007~thumb.jpg</string>-->
     <string name="name_saved_widget_image_file">explorer_widget.png</string>
 
     <string-array name="asset_ids">
         <item>KSC-02pp0471</item>
         <item>PIA00114</item>
-        <item>PIA07901</item>
+        <item>0006655</item>
         <item>PIA04224</item>
         <item>GSFC_20171208_Archive_e000492</item>
         <item>PIA15427</item>
@@ -84,7 +76,7 @@
     <string-array name="image_urls">
         <item>https://images-assets.nasa.gov/image/KSC-02pp0471/KSC-02pp0471~small.jpg</item>
         <item>https://images-assets.nasa.gov/image/PIA00114/PIA00114~small.jpg</item>
-        <item>https://images-assets.nasa.gov/image/PIA07901/PIA07901~thumb.jpg</item>
+        <item>https://images-assets.nasa.gov/image/0006655/0006655~small.jpg</item>
         <item>https://images-assets.nasa.gov/image/PIA04224/PIA04224~thumb.jpg</item>
         <item>https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000492/GSFC_20171208_Archive_e000492~thumb.jpg</item>
         <item>https://images-assets.nasa.gov/image/PIA15427/PIA15427~thumb.jpg</item>
