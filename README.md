@@ -24,13 +24,16 @@
 
 ## Project Overview
 Explorer is an android application that lets users search through the NASA image directory. NASA has developed a rich archive of images from its few decades of space research and exploration. Users can search by a keyword or by year or by the combination of both.
-Search results are shown in a recycler view. Users can select a result and check details, can navigate to the next or previous result item from the details page. The application comes with a home screen app widget which shows seven different images for seven days of the week. Image URLs are saved beforehand to avoid any copyright violations of the API. This application was built as the final project of the Udacity android nanodegree program. The main objectives were  - a student would develop the project idea, find appropriate API to work with, design UIs, prepare a specification requirement analysis document, implement the code.  In the first stage of the project, I designed and planned the app. In the second stage, I built the app.
+Search results are shown in a recycler view. Users can select a result and check details, can navigate to the next or previous result item from the details page. The application comes with a home screen app widget which shows seven different images for seven days of the week. Image URLs are saved beforehand to avoid any copyright violations of the API. This application was built as the final project of the Udacity android nanodegree program. The main objectives were  - a student would develop the project idea, find appropriate API to work with, design UIs, prepare a specification requirement analysis document, implement the code.  In the first stage of the project, I designed and planned the app. In the second stage, I implemented the app.
 
-## Requirements for the design and planning phase
+## Requirements
+
+### Design and planning phase
 - The proposal contains an overview description, intended users, user interface mockups
 - Proposal declares the application's primary features, draws a plan for how features will be implemented via a set of well structured technical tasks
-- The proposal outlines any key constraints such as data persistence, UX corner cases, and libraries used. App clearly outlines how a  database will be implemented.
-### Requirements for the development phase
+- The proposal outlines any key constraints such as data persistence, UX corner cases, and libraries used, clearly outlines how a  database will be implemented.
+
+### Development phase
 - The app integrates third-party library
 - The app validates all input from servers and users. The application does not crash for wrong format data or no data
 - The application should include support for accessibility
