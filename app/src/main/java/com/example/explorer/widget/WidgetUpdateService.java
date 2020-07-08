@@ -40,19 +40,7 @@ public class WidgetUpdateService extends IntentService {
                 helper.getImageForTheDay();
 
 
-                Constraints constraints = new Constraints.Builder()
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build();
 
-                PeriodicWorkRequest saveRequest =
-                        new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
-                                .setConstraints(constraints)
-                                .build();
-
-                WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
-                        WidgetUpdateWorker.class.getSimpleName(),
-                        ExistingPeriodicWorkPolicy.KEEP,
-                        saveRequest);
 
             }
         }

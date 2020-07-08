@@ -218,7 +218,6 @@ public class DetailFragment extends Fragment {
 
         mDataBinding.pbDetail.setVisibility(View.VISIBLE);
         Call<SpaceResponse> call = service.getAsset(assetId, SpaceApiService.PARAM_MEDIA_TYPE);
-        Log.d(TAG, "::::::::::::::::::: inside getAssetDetail, call enqueued");
 
 
         call.enqueue(new Callback<SpaceResponse>() {

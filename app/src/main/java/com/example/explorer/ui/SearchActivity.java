@@ -4,6 +4,11 @@ package com.example.explorer.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import android.graphics.Point;
 import android.os.Bundle;
@@ -13,6 +18,7 @@ import android.view.View;
 
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
+import com.example.explorer.widget.WidgetUpdateWorker;
 import com.google.android.gms.ads.AdRequest;
 
 import com.google.android.gms.ads.AdView;
@@ -21,6 +27,7 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.util.concurrent.TimeUnit;
 
 
 public class SearchActivity extends AppCompatActivity {
@@ -79,9 +86,10 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
+
+
         if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) )
         {
-            Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is detail view");
             mAssetId = getIntent().getStringExtra(getString(R.string.widget_intent_asset_id_key));
             showDetailForAsset(mAssetId);
 
@@ -98,6 +106,21 @@ public class SearchActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
+
+            //schedule work manager to update widget
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+
+            PeriodicWorkRequest saveRequest =
+                    new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
+                            .setConstraints(constraints)
+                            .build();
+
+            WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
+                    WidgetUpdateWorker.class.getSimpleName(),
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    saveRequest);
          }
     }
 

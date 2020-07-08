@@ -24,7 +24,7 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
                                 int appWidgetId, Bitmap bitmap, String assetId) {
 
         // Construct the RemoteViews object
-        Log.d(TAG, "inside updateAppWidget, setting widget image");
+        Log.d(TAG, "::::::::: inside updateAppWidget, assetId =" + assetId);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.explorer_widget);
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra(context.getString(R.string.widget_intent_asset_id_key), assetId);
@@ -33,7 +33,7 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
                 context,
                 0,
                 intent,
-                0);
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
         if(bitmap != null) {
             views.setImageViewBitmap(R.id.iv_widget, bitmap);

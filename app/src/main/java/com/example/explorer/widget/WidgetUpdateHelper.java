@@ -26,13 +26,23 @@ public class WidgetUpdateHelper {
     public  void getImageForTheDay() {
 
         Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(System.currentTimeMillis());
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+
 
         String[] assetIds = mContext.getResources().getStringArray(R.array.asset_ids);
         String[] imageUrls = mContext.getResources().getStringArray(R.array.image_urls);
-        String imageURlStr = imageUrls[dayOfWeek-1];
-        String assetId = assetIds[dayOfWeek-1];
+
+        String assetStr = "";
+        String imagesStr = " ";
+        for(int i = 0; i< assetIds.length; i++){
+           assetStr += assetIds[i] + ", ";
+        }
+        for(int i = 0; i< imageUrls.length; i++){
+            imagesStr += imageUrls[i] + ", ";
+        }
+
+        String imageURlStr = imageUrls[dayOfWeek];
+        String assetId = assetIds[dayOfWeek];
 
 
         //now download the image from network
