@@ -2,8 +2,17 @@
 <resources>
 <!--SearchFragment-->
     <dimen name="search_query_margin_top">20dp</dimen>
-    <dimen name="search_button_margin_top">20dp</dimen>
-    <dimen name="intro_margin_top">20dp</dimen>
+    <dimen name="search_button_margin_top">10dp</dimen>
+    <dimen name="label_intro_margin_top">20dp</dimen>
+    <dimen name="label_intro_padding">5dp</dimen>
+    <dimen name="label_others_margin_top">10dp</dimen>
+    <dimen name="error_msg_margin_top">0dp</dimen>
+    <dimen name="label_margin_start">10dp</dimen>
+
+
+    <dimen name="search_criteria_label_width_constraint">0.20</dimen>
+    <dimen name="search_criteria_edit_text_width_constraint">0.20</dimen>
+    <dimen name="error_msg_text_width_constraint">.50</dimen>
 
 
 <!--    detailFragment-->

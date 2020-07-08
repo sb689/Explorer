@@ -4,8 +4,11 @@ package com.example.explorer.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 
 import com.example.explorer.R;
@@ -45,6 +48,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        getScreenSize();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -97,6 +101,17 @@ public class SearchActivity extends AppCompatActivity {
          }
     }
 
+
+    public void getScreenSize(){
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point outSize = new Point();
+        display.getSize(outSize);
+        int width = outSize.x;
+        int height = outSize.y;
+
+        Log.d(TAG, ":::::::::: screen size , x =" + width + " and y = " + height);
+    }
 
     public void showSearchResponseList(){
 
