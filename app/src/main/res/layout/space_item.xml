@@ -19,7 +19,7 @@
         app:layout_constraintWidth_percent=".50"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-
+        android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -112,6 +112,7 @@ public class SearchFragment  extends Fragment {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean isHandled = false;
+                mDataBinding.tvErrorMsg.setVisibility(View.GONE);
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
         
                     if(v == mDataBinding.etQueryInput) {
@@ -139,6 +140,7 @@ public class SearchFragment  extends Fragment {
 
             }
         });
+
 
 
         mContext = getContext();

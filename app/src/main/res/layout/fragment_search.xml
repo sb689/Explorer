@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/label_intro_margin_top"
-        android:maxLines="2"
+        android:maxLines="3"
         android:padding="@dimen/label_intro_padding"
         android:text="@string/introduction"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/label_query"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_label_height"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
         android:text="@string/label_query"
         android:textSize="18sp"
@@ -43,10 +43,11 @@
 
         />
 
+
     <AutoCompleteTextView
         android:id="@+id/et_query_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_edit_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
         android:completionThreshold="1"
         android:hint="@string/query_text"
@@ -69,7 +70,7 @@
     <TextView
         android:id="@+id/label_start_year"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_label_height"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
         android:text="@string/label_start_year"
         android:textSize="18sp"
@@ -86,7 +87,7 @@
     <AutoCompleteTextView
         android:id="@+id/et_start_year_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_edit_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
         android:completionThreshold="1"
         android:hint="@string/start_year_text"
@@ -109,7 +110,7 @@
     <TextView
         android:id="@+id/label_end_year"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_label_height"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
         android:text="@string/label_end_year"
         android:textSize="18sp"
@@ -126,7 +127,7 @@
     <AutoCompleteTextView
         android:id="@+id/et_end_year_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_edit_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
         android:completionThreshold="1"
         android:hint="@string/end_year_text"
@@ -177,10 +178,12 @@
         />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="@dimen/error_msg_text_width_constraint"
         android:layout_height="wrap_content"
         android:id="@+id/tv_error_msg"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
        android:gravity="center_horizontal"
         app:layout_constraintTop_toBottomOf="@+id/button_search"
         android:textSize="18sp"

@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/label_query"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_label_height"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
         android:text="@string/label_query"
         android:textSize="18sp"
@@ -46,7 +46,7 @@
     <AutoCompleteTextView
         android:id="@+id/et_query_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_edit_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
         android:completionThreshold="1"
         android:hint="@string/query_text"
@@ -69,7 +69,7 @@
     <TextView
         android:id="@+id/label_start_year"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_label_height"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
         android:text="@string/label_start_year"
         android:textSize="18sp"
@@ -86,7 +86,7 @@
     <AutoCompleteTextView
         android:id="@+id/et_start_year_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_edit_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
         android:completionThreshold="1"
         android:hint="@string/start_year_text"
@@ -109,7 +109,7 @@
     <TextView
         android:id="@+id/label_end_year"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_label_height"
+        android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
         android:text="@string/label_end_year"
         android:textSize="18sp"
@@ -126,7 +126,7 @@
     <AutoCompleteTextView
         android:id="@+id/et_end_year_input"
         android:layout_width="0dp"
-        android:layout_height="@dimen/search_criteria_edit_text_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
         android:completionThreshold="1"
         android:hint="@string/end_year_text"
