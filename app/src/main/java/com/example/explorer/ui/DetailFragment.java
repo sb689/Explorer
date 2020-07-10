@@ -17,8 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.explorer.R;
 
-import com.example.explorer.databinding.FragmentDetailBinding;
-
+import com.example.explorer.databinding.FragmentDetail2Binding;
 import com.example.explorer.model.SpaceViewModel2;
 import com.example.explorer.model.spaceResponse.Item;
 import com.example.explorer.model.spaceResponse.SpaceResponse;
@@ -40,7 +39,7 @@ public class DetailFragment extends Fragment {
     private static final String BUNDLE_POSITION_KEY = "item_position";
     private static final String BUNDLE_ASSET_ID_KEY = "load-asset";
 
-    private static FragmentDetailBinding mDataBinding;
+    private static FragmentDetail2Binding mDataBinding;
     private static Item mSelectedItem;
     public static List<Item> mItemList;
     public static List<Item> mAssetList;
@@ -96,8 +95,22 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
+        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail2, container, false );
         mContext = getActivity();
+
+        mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNextItem();
+            }
+        });
+
+        mDataBinding.ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPrevItem();
+            }
+        });
 
         if(getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
             String assetId = getArguments().getString(BUNDLE_ASSET_ID_KEY);
@@ -258,13 +271,24 @@ public class DetailFragment extends Fragment {
     }
 
 
+    private void showNavigationButtons()
+    {
+        mDataBinding.ivBackArrow.setVisibility(View.VISIBLE);
+        mDataBinding.ivFrontArrow.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNavigationButtons()
+    {
+        mDataBinding.ivBackArrow.setVisibility(View.GONE);
+        mDataBinding.ivFrontArrow.setVisibility(View.GONE);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
-        if(!mAssetDetailView) {
-            ((SearchActivity) requireActivity()).showNavigationButtons();
+        if(mAssetDetailView) {
+            hideNavigationButtons();
         }
     }
 
@@ -272,7 +296,7 @@ public class DetailFragment extends Fragment {
     public void onStop() {
         super.onStop();
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-        ((SearchActivity) requireActivity()).hideNavigationButtons();
+
     }
 
     @Override
@@ -280,4 +304,8 @@ public class DetailFragment extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putInt(getString(R.string.saved_instance_bundle_key), mPosition);
     }
+
+
+
+
 }

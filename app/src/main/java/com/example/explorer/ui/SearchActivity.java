@@ -14,7 +14,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
+
 
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
@@ -33,21 +33,15 @@ import java.util.concurrent.TimeUnit;
 public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
-    private static final String SHARED_PREF_ASSET_STAT = "asset.status";
-    private static final String SHARED_PREF_NAME = "com.example.explorer.shared.pref";
     private static final String SAVED_INSTANCE_ASSET_ID_KEY = "asset_id_key";
 
 
     public static int mPosition;
-    private AdView mAdView;;
     public static FirebaseAnalytics mFirebaseAnalytics;
     private ActivitySearchBinding mDataBinding;
     private String mAssetId;
 
 
-    public static int getmPosition() {
-        return mPosition;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +60,9 @@ public class SearchActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        mAdView = findViewById(R.id.adView);
+        AdView adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-        mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nextClicked();
-            }
-        });
-
-        mDataBinding.ivBackArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backClicked();
-            }
-        });
-
-
+        adView.loadAd(adRequest);
 
 
         if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) && savedInstanceState == null )
@@ -174,43 +152,6 @@ public class SearchActivity extends AppCompatActivity {
                         detailFragment, DetailFragment.TAG)
                 .addToBackStack(DetailFragment.TAG)
                 .commit();
-    }
-
-
-    public void nextClicked(){
-        Log.d(TAG, "::::::::::::::: nextClicked rcvd");
-        DetailFragment fragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
-        if(fragment == null)
-        {
-            Log.d(TAG, "::::::::::::::: fragment is null");
-        }
-        fragment.showNextItem();
-    }
-
-
-    public void backClicked(){
-        Log.d(TAG, "::::::::::::::: backClicked rcvd");
-        DetailFragment fragment = (DetailFragment) getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
-        if(fragment == null)
-        {
-            Log.d(TAG, "::::::::::::::: fragment is null");
-        }
-        fragment.showPrevItem();
-    }
-
-
-    public void hideNavigationButtons(){
-        mDataBinding.ivFrontArrow.setVisibility(View.GONE);
-        mDataBinding.ivBackArrow.setVisibility(View.GONE);
-    }
-
-    public void showNavigationButtons(){
-        mDataBinding.ivFrontArrow.setVisibility(View.VISIBLE);
-        mDataBinding.ivBackArrow.setVisibility(View.VISIBLE);
-        mDataBinding.ivFrontArrow.requestFocus();
-
-
-
     }
 
     @Override
