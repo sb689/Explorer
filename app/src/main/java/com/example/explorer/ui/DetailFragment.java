@@ -103,13 +103,13 @@ public class DetailFragment extends Fragment {
             String assetId = getArguments().getString(BUNDLE_ASSET_ID_KEY);
             //get data for provided assetId
             mAssetDetailView = true;
+            Log.d(TAG, ":::::::::::::  calling getAssetDetail");
             getAssetDetail(assetId);
         }
 
         else if(mItemList != null && mItemList.size() > 0){
             mAssetDetailView = false;
             loadDetailUI(mPosition);
-
         }
 
         return mDataBinding.getRoot();
@@ -203,8 +203,6 @@ public class DetailFragment extends Fragment {
 
     public void getAssetDetail(String assetId){
 
-
-
         if(!NetworkUtils.isNetworkConnected(getActivity())){
             showErrorMessage();
             return;
@@ -218,8 +216,6 @@ public class DetailFragment extends Fragment {
 
         mDataBinding.pbDetail.setVisibility(View.VISIBLE);
         Call<SpaceResponse> call = service.getAsset(assetId, SpaceApiService.PARAM_MEDIA_TYPE);
-
-
         call.enqueue(new Callback<SpaceResponse>() {
 
             @Override

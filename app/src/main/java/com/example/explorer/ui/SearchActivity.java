@@ -221,9 +221,4 @@ public class SearchActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "::::::::::: SearchActivity onDestroy called ");
-        super.onDestroy();
-    }
 }

@@ -11,8 +11,5 @@
     <dimen name="label_margin_start">20dp</dimen>
 
 
-
-<!--    <dimen name="search_criteria_label_width_constraint">0.20</dimen>-->
-<!--    <dimen name="search_criteria_edit_text_width_constraint">0.20</dimen>-->
     <dimen name="error_msg_text_width_constraint">.80</dimen>
 </resources>

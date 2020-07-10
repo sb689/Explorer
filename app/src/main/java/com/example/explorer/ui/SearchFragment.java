@@ -206,17 +206,16 @@ public class SearchFragment  extends Fragment {
 
 
     private void loadQuerySuggestions() {
-        Log.d(TAG, ":::::::::::::::  stared loadQuerySuggestions");
+
         List<String> mQuerySuggestions = new ArrayList<String>();
         for(int i = 0; i< mQueryRecordHistory.size(); i ++) {
             String query = mQueryRecordHistory.get(i).getSearchKey();
             mQuerySuggestions.add(query);
         }
-        Log.d(TAG, ":::::::::::::::  inside loadQuerySuggestions, getContext =" + requireActivity());
         ArrayAdapter<String> queryAdapter = new ArrayAdapter<String>(requireActivity(),
                 android.R.layout.simple_list_item_1, mQuerySuggestions);
         mDataBinding.etQueryInput.setAdapter(queryAdapter);
-        Log.d(TAG, ":::::::::::::::  finished loadQuerySuggestions");
+
     }
 
 
