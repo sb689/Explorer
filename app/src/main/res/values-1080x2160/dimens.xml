@@ -2,13 +2,13 @@
 <resources>
 
     <!--SearchFragment-->
-    <dimen name="search_query_margin_top">30dp</dimen>
-    <dimen name="search_button_margin_top">20dp</dimen>
+    <dimen name="search_query_margin_top">32dp</dimen>
+    <dimen name="search_button_margin_top">24dp</dimen>
     <dimen name="label_intro_margin_top">40dp</dimen>
-    <dimen name="label_intro_padding">10dp</dimen>
-    <dimen name="label_others_margin_top">30dp</dimen>
-    <dimen name="error_msg_margin_top">10dp</dimen>
-    <dimen name="label_margin_start">20dp</dimen>
+    <dimen name="label_intro_padding">8dp</dimen>
+    <dimen name="label_others_margin_top">32dp</dimen>
+    <dimen name="error_msg_margin_top">8dp</dimen>
+    <dimen name="label_margin_start">24dp</dimen>
 
 
     <dimen name="error_msg_text_width_constraint">.80</dimen>
