@@ -87,17 +87,20 @@ public class SearchActivity extends AppCompatActivity {
 
 
 
-        if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) )
+        if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) && savedInstanceState == null )
         {
             Log.d(TAG, "::::::::::::::  intent received");
             mAssetId = getIntent().getStringExtra(getString(R.string.widget_intent_asset_id_key));
             showDetailForAsset(mAssetId);
 
         }
+        else if(savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_ASSET_ID_KEY)){
+            Log.d(TAG, ":::::::::::::;  recreating widget image detail, no need to add fragment again");
 
+        }
         else if (savedInstanceState == null) {
-
-            SearchFragment fragment = new SearchFragment();
+            Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is null, loading SearchFragment");
+             SearchFragment fragment = new SearchFragment();
              getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
