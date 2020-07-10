@@ -1,6 +1,7 @@
 package com.example.explorer.widget;
 
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -24,7 +25,7 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
                                 int appWidgetId, Bitmap bitmap, String assetId) {
 
         // Construct the RemoteViews object
-        Log.d(TAG, "::::::::: inside updateAppWidget, assetId =" + assetId);
+
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.explorer_widget);
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra(context.getString(R.string.widget_intent_asset_id_key), assetId);

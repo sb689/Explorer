@@ -55,7 +55,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        getScreenSize();
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -90,38 +89,35 @@ public class SearchActivity extends AppCompatActivity {
 
         if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) )
         {
+            Log.d(TAG, "::::::::::::::  intent received");
             mAssetId = getIntent().getStringExtra(getString(R.string.widget_intent_asset_id_key));
             showDetailForAsset(mAssetId);
 
         }
-        else if(savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_ASSET_ID_KEY)){
-            mAssetId = savedInstanceState.getString(SAVED_INSTANCE_ASSET_ID_KEY);
-            showDetailForAsset(mAssetId);
 
-        }
         else if (savedInstanceState == null) {
-            Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is null, loading SearchFragment");
-             SearchFragment fragment = new SearchFragment();
+
+            SearchFragment fragment = new SearchFragment();
              getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
 
-            //schedule work manager to update widget
-            Constraints constraints = new Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build();
+        }
+        //schedule work manager to update widget
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
 
-            PeriodicWorkRequest saveRequest =
-                    new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
-                            .setConstraints(constraints)
-                            .build();
+        PeriodicWorkRequest saveRequest =
+                new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
+                        .setConstraints(constraints)
+                        .build();
 
-            WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
-                    WidgetUpdateWorker.class.getSimpleName(),
-                    ExistingPeriodicWorkPolicy.KEEP,
-                    saveRequest);
-         }
+        WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
+                WidgetUpdateWorker.class.getSimpleName(),
+                ExistingPeriodicWorkPolicy.KEEP,
+                saveRequest);
     }
 
 
@@ -220,5 +216,11 @@ public class SearchActivity extends AppCompatActivity {
             outState.putString(SAVED_INSTANCE_ASSET_ID_KEY, mAssetId);
         }
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "::::::::::: SearchActivity onDestroy called ");
+        super.onDestroy();
     }
 }

@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -59,7 +60,7 @@ public class SearchFragment  extends Fragment {
 
 
     private static FragmentSearchBinding mDataBinding;
-    private Toast mToast;
+   // private Toast mToast;
     private AppDatabase mDb;
     private List<QueryRecordEntry> mQueryRecordHistory;
     private List<YearRecordEntry> mYearRecordHistory;
@@ -80,6 +81,7 @@ public class SearchFragment  extends Fragment {
         queryHistoryViewModel.getRecords().observe(getActivity(), new Observer<List<QueryRecordEntry>>() {
             @Override
             public void onChanged(List<QueryRecordEntry> recordEntries) {
+                Log.d(TAG, ":::::::::  inside onChanged, recordEntries = " + recordEntries);
                 mQueryRecordHistory = recordEntries;
                 loadQuerySuggestions();
                 if(recordEntries.size() > RECORD_THRESHOLD){
@@ -196,7 +198,7 @@ public class SearchFragment  extends Fragment {
             String year = mYearRecordHistory.get(i).getYear();
             yearSuggestions.add(year);
         }
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(requireActivity(),
                 android.R.layout.simple_list_item_1, yearSuggestions);
         mDataBinding.etStartYearInput.setAdapter(yearAdapter);
         mDataBinding.etEndYearInput.setAdapter(yearAdapter);
@@ -204,14 +206,17 @@ public class SearchFragment  extends Fragment {
 
 
     private void loadQuerySuggestions() {
+        Log.d(TAG, ":::::::::::::::  stared loadQuerySuggestions");
         List<String> mQuerySuggestions = new ArrayList<String>();
         for(int i = 0; i< mQueryRecordHistory.size(); i ++) {
             String query = mQueryRecordHistory.get(i).getSearchKey();
             mQuerySuggestions.add(query);
         }
-        ArrayAdapter<String> queryAdapter = new ArrayAdapter<String>(getActivity(),
+        Log.d(TAG, ":::::::::::::::  inside loadQuerySuggestions, getContext =" + requireActivity());
+        ArrayAdapter<String> queryAdapter = new ArrayAdapter<String>(requireActivity(),
                 android.R.layout.simple_list_item_1, mQuerySuggestions);
         mDataBinding.etQueryInput.setAdapter(queryAdapter);
+        Log.d(TAG, ":::::::::::::::  finished loadQuerySuggestions");
     }
 
 
@@ -246,15 +251,19 @@ public class SearchFragment  extends Fragment {
 
     public void searchClicked(){
 
-        if(!NetworkUtils.isNetworkConnected(getContext())){
+        if(!NetworkUtils.isNetworkConnected(requireActivity())){
             showErrorMessage(NetworkUtils.ERROR_TAG_NO_NETWORK);
             return;
         }
 
         //check if shotKeyboard is still open then close it
         InputMethodManager imm = (InputMethodManager)
-                getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mDataBinding.getRoot().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                requireActivity().getSystemService(FragmentActivity.INPUT_METHOD_SERVICE);
+        try {
+            imm.hideSoftInputFromWindow(mDataBinding.getRoot().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+        }catch (Exception ex){
+            Log.d(TAG, "closing keyboard attempt ended in NullPointerException");
+        }
 
         mDataBinding.tvErrorMsg.setVisibility(View.INVISIBLE);
         String query = mDataBinding.etQueryInput.getText().length() > 0 ?
@@ -268,7 +277,7 @@ public class SearchFragment  extends Fragment {
 
         if(query == null  && yearStart == null && yearEnd == null){
 
-            mToast.makeText(getActivity(), getString(R.string.toast_search_criteria_required_msg), Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), getString(R.string.toast_search_criteria_required_msg), Toast.LENGTH_LONG).show();
 
         } else{
 
