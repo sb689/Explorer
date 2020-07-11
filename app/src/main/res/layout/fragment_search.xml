@@ -17,7 +17,7 @@
 
     <TextView
         android:id="@+id/label_intro"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/label_intro_margin_top"
         android:maxLines="3"

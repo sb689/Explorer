@@ -27,9 +27,9 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
 
 
     <!--    SpaceDetailActivity-->
-    <dimen name="detail_group_margin_start">40dp</dimen>
+    <dimen name="detail_group_margin_start">32dp</dimen>
     <dimen name="label_creator_width_percent">0.50</dimen>
-    <dimen name="tv_creator_width_percent">0.45</dimen>
+    <dimen name="tv_creator_width_percent">0.35</dimen>
 
 
 

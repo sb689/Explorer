@@ -28,7 +28,7 @@
 
         <ImageView
             android:id="@+id/iv_detail_image"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/image_content"
@@ -44,10 +44,11 @@
 
         <TextView
             android:id="@+id/tv_detail_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_detail_image"
             tools:text="Our Neighbor Andromeda"
             android:layout_marginStart="@dimen/detail_group_margin_start"
@@ -78,7 +79,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintWidth_percent="@dimen/tv_creator_width_percent"
             tools:text="NASA/ University of California/ University of Florida"
-            android:maxLines="3"
+            android:maxLines="4"
             app:layout_constraintStart_toEndOf="@id/label_creator"
             app:layout_constraintTop_toTopOf="@id/label_creator"
             app:layout_constraintBaseline_toBaselineOf="@+id/label_creator"
@@ -109,7 +110,7 @@
             tools:text="25th February, 2010"
             app:layout_constraintStart_toEndOf="@id/label_date"
             app:layout_constraintTop_toTopOf="@id/label_date"
-            android:layout_marginStart="@dimen/detail_group_margin_start"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:textSize="16sp"
             android:textColor="@color/detail_text_color"
@@ -117,13 +118,13 @@
 
         <TextView
             android:id="@+id/tv_description"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:text="This image was an observation of XYZ"
             app:layout_constraintStart_toStartOf="@id/label_date"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_date"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/detail_group_margin_start"
             android:layout_marginEnd="@dimen/detail_group_margin_start"
             android:layout_marginTop="16dp"
 
@@ -146,7 +147,7 @@
             />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/tv_detail_error_msg"
             app:layout_constraintStart_toStartOf="parent"
