@@ -16,8 +16,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.explorer.R;
-
-import com.example.explorer.databinding.FragmentDetail2Binding;
+import com.example.explorer.databinding.FragmentDetailBinding;
 import com.example.explorer.model.SpaceViewModel2;
 import com.example.explorer.model.spaceResponse.Item;
 import com.example.explorer.model.spaceResponse.SpaceResponse;
@@ -39,7 +38,7 @@ public class DetailFragment extends Fragment {
     private static final String BUNDLE_POSITION_KEY = "item_position";
     private static final String BUNDLE_ASSET_ID_KEY = "load-asset";
 
-    private static FragmentDetail2Binding mDataBinding;
+    private static FragmentDetailBinding mDataBinding;
     private static Item mSelectedItem;
     public static List<Item> mItemList;
     public static List<Item> mAssetList;
@@ -95,7 +94,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail2, container, false );
+        mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
         mContext = getActivity();
 
         mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
