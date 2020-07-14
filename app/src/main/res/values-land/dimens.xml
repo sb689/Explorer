@@ -10,9 +10,11 @@
     <dimen name="label_margin_start">8dp</dimen>
 
 
-    <dimen name="search_criteria_label_width_constraint">0.20</dimen>
-    <dimen name="search_criteria_edit_text_width_constraint">0.20</dimen>
+    <dimen name="search_criteria_label_width_constraint">0.15</dimen>
+    <dimen name="search_criteria_edit_text_width_constraint">0.15</dimen>
     <dimen name="error_msg_text_width_constraint">.50</dimen>
+    <dimen name="label_intro_vertical_bias">.10</dimen>
+    <dimen name="label_query_vertical_bias">.10</dimen>
 
 
 <!--    detailFragment-->

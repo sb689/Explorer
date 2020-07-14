@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="label_intro_margin_top">24dp</dimen>
-    <dimen name="search_query_margin_top">24dp</dimen>
-
-<!--    DetailActivity-->
-    <dimen name="detail_group_margin_start">48dp</dimen>
-</resources>

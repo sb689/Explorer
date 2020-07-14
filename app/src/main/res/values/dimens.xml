@@ -20,9 +20,12 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="label_intro_margin_top">64dp</dimen>
     <dimen name="label_intro_padding">8dp</dimen>
     <dimen name="label_others_margin_top">24dp</dimen>
-    <dimen name="error_msg_margin_top">0dp</dimen>
+    <dimen name="error_msg_margin_top">20dp</dimen>
     <dimen name="label_margin_start">24dp</dimen>
     <dimen name="error_msg_text_width_constraint">.90</dimen>
+    <dimen name="label_intro_vertical_bias">.15</dimen>
+    <dimen name="label_query_vertical_bias">.20</dimen>
+
 
 
 

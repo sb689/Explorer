@@ -1,8 +1,6 @@
 package com.example.explorer.ui;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,6 +26,7 @@ import com.example.explorer.R;
 import com.example.explorer.database.AppDatabase;
 import com.example.explorer.database.QueryRecordEntry;
 import com.example.explorer.database.YearRecordEntry;
+
 import com.example.explorer.databinding.FragmentSearchBinding;
 import com.example.explorer.model.QueryHistoryViewModel;
 import com.example.explorer.model.SpaceViewModel2;
@@ -53,14 +52,9 @@ public class SearchFragment  extends Fragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
-
     private static final int RECORD_THRESHOLD = 30;
 
-
-
-
     private static FragmentSearchBinding mDataBinding;
-   // private Toast mToast;
     private AppDatabase mDb;
     private List<QueryRecordEntry> mQueryRecordHistory;
     private List<YearRecordEntry> mYearRecordHistory;

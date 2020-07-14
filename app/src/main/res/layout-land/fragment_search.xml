@@ -3,209 +3,204 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-   <ScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:id = "@+id/scroll_view_search_fragment"
         >
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".SearchFragment"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:context=".SearchFragment">
 
-   >
+            <TextView
+                android:id="@+id/label_intro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:padding="@dimen/label_intro_padding"
+                android:text="@string/introduction"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_error_msg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="@dimen/label_intro_vertical_bias"
 
-    <TextView
-        android:id="@+id/label_intro"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/label_intro_margin_top"
-        android:maxLines="2"
-        android:padding="@dimen/label_intro_padding"
-        android:text="@string/introduction"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textAlignment="center"
+                />
 
-        />
-
-    <TextView
-        android:id="@+id/label_query"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
-        android:text="@string/label_query"
-        android:textSize="18sp"
-        android:textAlignment="viewEnd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_intro"
-        android:layout_marginStart="@dimen/label_margin_start"
-        android:textColor="@android:color/white"
-        android:labelFor="@+id/et_query_input"
-        android:layout_marginTop="@dimen/search_query_margin_top"
-
-        />
-
-    <AutoCompleteTextView
-        android:id="@+id/et_query_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
-        android:completionThreshold="1"
-        android:hint="@string/query_text"
-        android:textColorHint="@color/hint_color"
-        android:inputType="textVisiblePassword"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/label_query"
-        app:layout_constraintTop_toTopOf="@+id/label_query"
-        app:layout_constraintStart_toEndOf="@+id/label_query"
-        app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
-        android:imeOptions="actionNext"
-        android:nextFocusForward="@+id/et_start_year_input"
-        android:nextFocusRight="@+id/et_start_year_input"
-        android:nextFocusDown="@+id/et_start_year_input"
+            <TextView
+                android:id="@+id/label_query"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/label_margin_start"
+                android:labelFor="@+id/et_query_input"
+                android:text="@string/label_query"
+                android:textAlignment="viewEnd"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/et_query_input"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/label_intro"
+                app:layout_constraintVertical_bias="0.14"
 
 
-        />
-
-    <TextView
-        android:id="@+id/label_start_year"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
-        android:text="@string/label_start_year"
-        android:textSize="18sp"
-        android:textAlignment="viewEnd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_query"
-        android:layout_marginTop="@dimen/label_others_margin_top"
-        android:layout_marginStart="@dimen/label_margin_start"
-        android:textColor="@android:color/white"
-        android:labelFor="@+id/et_start_year_input"
-
-        />
-
-    <AutoCompleteTextView
-        android:id="@+id/et_start_year_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
-        android:completionThreshold="1"
-        android:hint="@string/start_year_text"
-        android:inputType="date"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/label_start_year"
-        app:layout_constraintStart_toEndOf="@+id/label_start_year"
-        app:layout_constraintTop_toTopOf="@+id/label_start_year"
-        app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
-        android:imeOptions="actionNext"
-        android:textColorHint="@color/hint_color"
-        android:nextFocusForward="@+id/et_end_year_input"
-        android:nextFocusRight="@+id/et_end_year_input"
-        android:nextFocusDown="@+id/et_end_year_input"
+                app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint" />
 
 
-        />
-
-    <TextView
-        android:id="@+id/label_end_year"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint"
-        android:text="@string/label_end_year"
-        android:textSize="18sp"
-        android:textAlignment="viewEnd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_start_year"
-        android:layout_marginTop="@dimen/label_others_margin_top"
-        android:layout_marginStart="@dimen/label_margin_start"
-        android:textColor="@android:color/white"
-        android:labelFor="@+id/et_end_year_input"
-
-        />
-
-    <AutoCompleteTextView
-        android:id="@+id/et_end_year_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
-        android:completionThreshold="1"
-        android:hint="@string/end_year_text"
-        android:inputType="date"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/label_end_year"
-        app:layout_constraintStart_toEndOf="@+id/label_end_year"
-        app:layout_constraintTop_toTopOf="@+id/label_end_year"
-        app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
-        android:imeOptions="actionNext"
-        android:textColorHint="@color/hint_color"
-        android:nextFocusForward="@+id/button_search"
-        android:nextFocusDown="@+id/button_search"
-        android:nextFocusRight="@+id/button_search"
+            <AutoCompleteTextView
+                android:id="@+id/et_query_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
+                android:completionThreshold="1"
+                android:hint="@string/query_text"
+                android:imeOptions="actionNext"
+                android:inputType="textVisiblePassword"
+                android:nextFocusRight="@+id/et_start_year_input"
+                android:nextFocusDown="@+id/et_start_year_input"
+                android:nextFocusForward="@+id/et_start_year_input"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/hint_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/label_query"
+                app:layout_constraintEnd_toStartOf="@+id/label_start_year"
+                app:layout_constraintStart_toEndOf="@+id/label_query"
+                app:layout_constraintTop_toTopOf="@+id/label_query"
+                app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
 
 
-        />
+                />
 
-    <Button
-        android:id="@+id/button_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_search_text"
-        android:textColor="@drawable/button_text_color"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@id/label_end_year"
-        app:layout_constraintEnd_toEndOf="@+id/et_end_year_input"
-        app:layout_constraintTop_toBottomOf="@+id/label_end_year"
-        android:layout_marginTop="@dimen/search_button_margin_top"
-        android:contentDescription="@string/button_search_content_description"
-        style="?android:attr/borderlessButtonStyle"
-        android:nextFocusUp="@id/et_query_input"
-        android:nextFocusRight="@id/et_query_input"
+            <TextView
+                android:id="@+id/label_start_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:labelFor="@+id/et_start_year_input"
+                android:text="@string/label_start_year"
+                android:textAlignment="viewEnd"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/et_start_year_input"
+                app:layout_constraintStart_toEndOf="@+id/et_query_input"
+                app:layout_constraintTop_toTopOf="@+id/label_query"
+                app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint" />
 
-        />
-
-
-    <ProgressBar
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:id="@+id/pb_main"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        />
-
-    <TextView
-        android:layout_width="0dp"
-        app:layout_constraintWidth_percent="@dimen/error_msg_text_width_constraint"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_error_msg"
-        app:layout_constraintStart_toEndOf="@id/et_start_year_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/et_start_year_input"
-        app:layout_constraintTop_toTopOf="@+id/et_start_year_input"
-        android:textSize="18sp"
-        android:layout_marginTop="@dimen/error_msg_margin_top"
-        android:visibility="invisible"
-        android:text="@string/main_error_msg_general"
-        android:textColor="@android:color/white"
-        android:textAlignment="center"
-        android:padding="12dp"
-        android:maxLines="2"
-
-        />
+            <AutoCompleteTextView
+                android:id="@+id/et_start_year_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
+                android:completionThreshold="1"
+                android:hint="@string/start_year_text"
+                android:imeOptions="actionNext"
+                android:inputType="date"
+                android:nextFocusRight="@+id/et_end_year_input"
+                android:nextFocusDown="@+id/et_end_year_input"
+                android:nextFocusForward="@+id/et_end_year_input"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/hint_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/label_start_year"
+                app:layout_constraintEnd_toStartOf="@id/label_end_year"
+                app:layout_constraintStart_toEndOf="@+id/label_start_year"
+                app:layout_constraintTop_toTopOf="@+id/label_start_year"
+                app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-   </ScrollView>
+                />
+
+            <TextView
+                android:id="@+id/label_end_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:labelFor="@+id/et_end_year_input"
+                android:text="@string/label_end_year"
+                android:textAlignment="viewEnd"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/label_start_year"
+                app:layout_constraintEnd_toStartOf="@id/et_end_year_input"
+                app:layout_constraintStart_toEndOf="@+id/et_start_year_input"
+                app:layout_constraintWidth_percent="@dimen/search_criteria_label_width_constraint" />
+
+
+            <AutoCompleteTextView
+                android:id="@+id/et_end_year_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/search_criteria_edit_text_margin_start"
+                android:completionThreshold="1"
+                android:hint="@string/end_year_text"
+                android:imeOptions="actionNext"
+                android:inputType="date"
+                android:nextFocusRight="@+id/button_search"
+                android:nextFocusDown="@+id/button_search"
+                android:nextFocusForward="@+id/button_search"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/hint_color"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/label_end_year"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/label_end_year"
+                app:layout_constraintTop_toTopOf="@+id/label_end_year"
+                app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint" />
+
+
+            <Button
+                android:id="@+id/button_search"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:contentDescription="@string/button_search_content_description"
+                android:nextFocusRight="@id/et_query_input"
+                android:nextFocusUp="@id/et_query_input"
+                android:text="@string/button_search_text"
+                android:textColor="@drawable/button_text_color"
+
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_start_year" />
+
+            <ProgressBar
+                android:id="@+id/pb_main"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_error_msg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/error_msg_margin_top"
+                android:lines="1"
+                android:padding="12dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_search"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
