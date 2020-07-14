@@ -72,7 +72,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/label_start_year"
                 app:layout_constraintStart_toEndOf="@+id/label_query"
                 app:layout_constraintTop_toTopOf="@+id/label_query"
-                app:layout_constraintWidth_percent="@dimen/search_criteria_edit_text_width_constraint"
+                app:layout_constraintWidth_percent=".20"
 
 
                 />
@@ -81,7 +81,7 @@
                 android:id="@+id/label_start_year"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="0dp"
                 android:labelFor="@+id/et_start_year_input"
                 android:text="@string/label_start_year"
                 android:textAlignment="viewEnd"
@@ -120,7 +120,7 @@
                 android:id="@+id/label_end_year"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="0dp"
                 android:labelFor="@+id/et_end_year_input"
                 android:text="@string/label_end_year"
                 android:textAlignment="viewEnd"
