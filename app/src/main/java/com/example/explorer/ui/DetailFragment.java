@@ -1,6 +1,5 @@
 package com.example.explorer.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,12 +38,9 @@ public class DetailFragment extends Fragment {
     private static final String BUNDLE_POSITION_KEY = "item_position";
     private static final String BUNDLE_ASSET_ID_KEY = "load-asset";
 
-    private static FragmentDetailBinding mDataBinding;
-    private static Item mSelectedItem;
-    public static List<Item> mItemList;
-    public static List<Item> mAssetList;
-    public static int mPosition;
-    private static Context mContext;
+    private  FragmentDetailBinding mDataBinding;
+    public  List<Item> mItemList;
+    public int mPosition;
     private boolean mAssetDetailView;
 
 
@@ -67,23 +64,18 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
+        if( getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
             return;
         }
-        SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
-        viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> items) {
-                viewModel.getItemList().removeObserver(this);
-                mItemList = items;
-            }
-        });
+
         if (savedInstanceState != null) {
+
             mPosition = savedInstanceState.getInt(getString(R.string.saved_instance_bundle_key));
+            Log.d(TAG, "onCreate, mPosition read from savedInstanceState, mPosition= " + mPosition );
         } else if (getArguments().containsKey(BUNDLE_POSITION_KEY)) {
             mPosition = getArguments().getInt(BUNDLE_POSITION_KEY);
+            Log.d(TAG, "onCreate, mPosition read from arguments, mPosition= " + mPosition );
         }
-        mSelectedItem = mItemList.get(mPosition);
 
     }
 
@@ -95,7 +87,38 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
-        mContext = getActivity();
+
+        SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
+        viewModel.getItemList().observe(requireActivity(), new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                mItemList = items;
+                viewModel.getItemList().removeObservers(requireActivity());
+                Log.d( TAG, " mItemList status= " + mItemList);
+                if(mItemList != null)
+                {
+                    Log.d( TAG, " mItemList size= " + mItemList.size());
+                }
+
+                if(getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
+                    String assetId = getArguments().getString(BUNDLE_ASSET_ID_KEY);
+                    //get data for provided assetId
+                    mAssetDetailView = true;
+                    Log.d(TAG, ":::::::::::::  calling getAssetDetail");
+                    getAssetDetail(assetId);
+                }
+
+                else if(mItemList != null && mItemList.size() > 0){
+                    mAssetDetailView = false;
+                    loadDetailUI(mPosition);
+                }
+                else{
+                    Log.d(TAG, ":::::::::::::  inside onCreateView, received mItemList null or 0");
+                }
+
+            }
+        });
+
 
         mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,47 +134,40 @@ public class DetailFragment extends Fragment {
             }
         });
 
-        if(getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
-            String assetId = getArguments().getString(BUNDLE_ASSET_ID_KEY);
-            //get data for provided assetId
-            mAssetDetailView = true;
-            Log.d(TAG, ":::::::::::::  calling getAssetDetail");
-            getAssetDetail(assetId);
-        }
 
-        else if(mItemList != null && mItemList.size() > 0){
-            mAssetDetailView = false;
-            loadDetailUI(mPosition);
-        }
-
+        //mDataBinding.tvDescription.setPadding(0,0,0, SearchActivity.mAdViewHeight + 30);
         return mDataBinding.getRoot();
     }
 
 
-    public static void loadDetailUI(int position) {
-
+    public void loadDetailUI(int position) {
 
         Log.d(TAG, ":::::::: inside loadDetailUI, position = "+ position);
-        mSelectedItem = mItemList.get(position);
+        Item selectedItem = mItemList.get(position);
         mPosition = position;
-        mDataBinding.tvDetailTitle.setText(mSelectedItem.getData().get(0).getTitle());
+        Log.d(TAG, "printing item detail to solve bug");
+        Log.d(TAG, "title " + selectedItem.getData().get(0).getTitle());
+        Log.d(TAG, "href: " + selectedItem.getLinks().get(0).getHref());
 
-        Log.d(TAG, ":::::::: inside loadDetailUI, title = "+ mSelectedItem.getData().get(0).getTitle());
-        String imagePath = mSelectedItem.getLinks().get(0).getHref();
+        mDataBinding.tvDetailTitle.setText(selectedItem.getData().get(0).getTitle());
+
+        Log.d(TAG, ":::::::: inside loadDetailUI, title = "+ selectedItem.getData().get(0).getTitle());
+        String imagePath = selectedItem.getLinks().get(0).getHref();
         Picasso.get().load(imagePath).into(mDataBinding.ivDetailImage);
 
-        String creator = mSelectedItem.getData().get(0).getSecondary_creator();
+        String creator = selectedItem.getData().get(0).getSecondary_creator();
         if(creator == null || creator.isEmpty()){
-            creator = mContext.getString(R.string.secondary_creator_na);
+            creator = getContext().getString(R.string.secondary_creator_na);
+
         }
-        
         mDataBinding.tvCreator.setText(creator);
-        mDataBinding.tvDate.setText(mSelectedItem.getData().get(0).getDate_created());
-        mDataBinding.tvDescription.setText(mSelectedItem.getData().get(0).getDescription());
+        mDataBinding.tvDate.setText(selectedItem.getData().get(0).getDate_created());
+        mDataBinding.tvDescription.setText(selectedItem.getData().get(0).getDescription());
 
     }
 
-    private static void loadDetailAssetInfo(Item item) {
+
+    private  void loadDetailAssetInfo(Item item) {
 
 
         mDataBinding.tvDetailTitle.setText(item.getData().get(0).getTitle());
@@ -161,9 +177,8 @@ public class DetailFragment extends Fragment {
 
         String creator = item.getData().get(0).getSecondary_creator();
         if(creator == null || creator.isEmpty()){
-            creator = mContext.getString(R.string.secondary_creator_na);
+            creator = getContext().getString(R.string.secondary_creator_na);
         }
-
         mDataBinding.tvCreator.setText(creator);
         mDataBinding.tvDate.setText(item.getData().get(0).getDate_created());
         mDataBinding.tvDescription.setText(item.getData().get(0).getDescription());
@@ -270,12 +285,6 @@ public class DetailFragment extends Fragment {
     }
 
 
-    private void showNavigationButtons()
-    {
-        mDataBinding.ivBackArrow.setVisibility(View.VISIBLE);
-        mDataBinding.ivFrontArrow.setVisibility(View.VISIBLE);
-    }
-
     private void hideNavigationButtons()
     {
         mDataBinding.ivBackArrow.setVisibility(View.GONE);
@@ -305,6 +314,15 @@ public class DetailFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView called");
+    }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy called");
+    }
 }

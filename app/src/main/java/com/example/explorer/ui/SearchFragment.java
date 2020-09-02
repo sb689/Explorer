@@ -2,6 +2,7 @@ package com.example.explorer.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -54,12 +55,14 @@ public class SearchFragment  extends Fragment {
 
     private static final int RECORD_THRESHOLD = 30;
 
-    private static FragmentSearchBinding mDataBinding;
+    private FragmentSearchBinding mDataBinding;
     private AppDatabase mDb;
     private List<QueryRecordEntry> mQueryRecordHistory;
     private List<YearRecordEntry> mYearRecordHistory;
-    private List<Item> mResponseData;
-    private static Context mContext;
+    private ArrayAdapter<String> mYearAdapter;
+    private  ArrayAdapter<String> mQueryAdapter;
+
+
 
     @Nullable
     @Override
@@ -68,11 +71,11 @@ public class SearchFragment  extends Fragment {
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
 
 
-        mDb = AppDatabase.getInstance(getContext());
+        mDb = AppDatabase.getInstance(getActivity().getApplicationContext());
 
         ViewModelProvider.Factory factory = new ViewModelProvider.AndroidViewModelFactory(getActivity().getApplication());
         QueryHistoryViewModel queryHistoryViewModel = new ViewModelProvider(this, factory).get(QueryHistoryViewModel.class);
-        queryHistoryViewModel.getRecords().observe(getActivity(), new Observer<List<QueryRecordEntry>>() {
+        queryHistoryViewModel.getRecords().observe(getViewLifecycleOwner(), new Observer<List<QueryRecordEntry>>() {
             @Override
             public void onChanged(List<QueryRecordEntry> recordEntries) {
                 Log.d(TAG, ":::::::::  inside onChanged, recordEntries = " + recordEntries);
@@ -85,7 +88,7 @@ public class SearchFragment  extends Fragment {
         });
 
         YearViewModel yearViewModel = new ViewModelProvider(this, factory).get(YearViewModel.class);
-        yearViewModel.getRecords().observe(getActivity(), new Observer<List<YearRecordEntry>>() {
+        yearViewModel.getRecords().observe(getViewLifecycleOwner(), new Observer<List<YearRecordEntry>>() {
             @Override
             public void onChanged(List<YearRecordEntry> yearRecordEntries) {
                 mYearRecordHistory = yearRecordEntries;
@@ -137,9 +140,6 @@ public class SearchFragment  extends Fragment {
             }
         });
 
-
-
-        mContext = getContext();
         return mDataBinding.getRoot();
     }
 
@@ -192,10 +192,10 @@ public class SearchFragment  extends Fragment {
             String year = mYearRecordHistory.get(i).getYear();
             yearSuggestions.add(year);
         }
-        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(requireActivity(),
+         mYearAdapter = new ArrayAdapter<String>(requireActivity(),
                 android.R.layout.simple_list_item_1, yearSuggestions);
-        mDataBinding.etStartYearInput.setAdapter(yearAdapter);
-        mDataBinding.etEndYearInput.setAdapter(yearAdapter);
+        mDataBinding.etStartYearInput.setAdapter(mYearAdapter);
+        mDataBinding.etEndYearInput.setAdapter(mYearAdapter);
     }
 
 
@@ -206,9 +206,9 @@ public class SearchFragment  extends Fragment {
             String query = mQueryRecordHistory.get(i).getSearchKey();
             mQuerySuggestions.add(query);
         }
-        ArrayAdapter<String> queryAdapter = new ArrayAdapter<String>(requireActivity(),
+        mQueryAdapter = new ArrayAdapter<String>(requireActivity(),
                 android.R.layout.simple_list_item_1, mQuerySuggestions);
-        mDataBinding.etQueryInput.setAdapter(queryAdapter);
+        mDataBinding.etQueryInput.setAdapter(mQueryAdapter);
 
     }
 
@@ -228,12 +228,12 @@ public class SearchFragment  extends Fragment {
         mDataBinding.buttonSearch.setEnabled(true);
     }
 
-    private static void showProgressBar(){
+    private  void showProgressBar(){
         mDataBinding.buttonSearch.setEnabled(false);
         mDataBinding.pbMain.setVisibility(View.VISIBLE);
     }
 
-    private static void hideProgressBar(){
+    private  void hideProgressBar(){
         mDataBinding.pbMain.setVisibility(View.INVISIBLE);
         mDataBinding.buttonSearch.setEnabled(true);
 
@@ -262,10 +262,10 @@ public class SearchFragment  extends Fragment {
         String query = mDataBinding.etQueryInput.getText().length() > 0 ?
                 mDataBinding.etQueryInput.getText().toString() : null;
 
-        String yearStart = mDataBinding.etStartYearInput.getText().length() > 0?
+        String yearStart =  mDataBinding.etStartYearInput.getText().length() > 0?
                 mDataBinding.etStartYearInput.getText().toString() : null;
 
-        String yearEnd = mDataBinding.etEndYearInput.getText().length() > 0 ?
+        String yearEnd =  mDataBinding.etEndYearInput.getText().length() > 0 ?
                 mDataBinding.etEndYearInput.getText().toString() : null;
 
         if(query == null  && yearStart == null && yearEnd == null){
@@ -364,4 +364,24 @@ public class SearchFragment  extends Fragment {
 
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        super.onDestroy();
+        mDataBinding.buttonSearch.setOnClickListener(null);
+        mDb = null;
+        mQueryAdapter = null;
+        mYearAdapter = null;
+        mDataBinding.buttonSearch.setOnClickListener(null);
+        mDataBinding.etStartYearInput.setAdapter(null);
+        mDataBinding.etEndYearInput.setAdapter(null);
+        mDataBinding.etQueryInput.setOnEditorActionListener(null);
+        mDataBinding.etQueryInput.setAdapter(null);
+        mDataBinding = null;
+        mQueryRecordHistory = null;
+        mYearRecordHistory = null;
+    }
+
+
 }

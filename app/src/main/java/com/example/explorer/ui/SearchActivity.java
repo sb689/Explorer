@@ -12,6 +12,7 @@ import androidx.work.WorkManager;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 
@@ -19,8 +20,10 @@ import android.view.Display;
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
 import com.example.explorer.widget.WidgetUpdateWorker;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -35,7 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     private static final String TAG = SearchActivity.class.getSimpleName();
     private static final String SAVED_INSTANCE_ASSET_ID_KEY = "asset_id_key";
 
-
+    public static int mAdViewHeight;
     public static int mPosition;
     public static FirebaseAnalytics mFirebaseAnalytics;
     private ActivitySearchBinding mDataBinding;
@@ -51,19 +54,17 @@ public class SearchActivity extends AppCompatActivity {
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) { }
-        });
+
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        AdView adView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
 
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mDataBinding.adView.loadAd(adRequest);
+        Log.d(TAG, "banner added of size, "+ getSmartBannerHeightDp());
+        mAdViewHeight = getSmartBannerHeightDp();
 
         if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) && savedInstanceState == null )
         {
@@ -101,6 +102,13 @@ public class SearchActivity extends AppCompatActivity {
                 saveRequest);
     }
 
+
+    private int getSmartBannerHeightDp() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        float screenHeightDp = dm.heightPixels / dm.density;
+
+        return screenHeightDp > 720 ? 90 : screenHeightDp > 400 ? 50 : 32;
+    }
 
     public void getScreenSize(){
 

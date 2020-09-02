@@ -45,13 +45,15 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
         mDataBinding.rvSpaceList.setLayoutManager(layoutManager);
         mDataBinding.rvSpaceList.setAdapter(mAdapter);
         mDataBinding.rvSpaceList.setHasFixedSize(true);
+        mDataBinding.rvSpaceList.setPadding(0,0,0, SearchActivity.mAdViewHeight + 30);
+
 
         SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
-        viewModel.getItemList().observe(getActivity(), new Observer<List<Item>>() {
+        viewModel.getItemList().observe(requireActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
-
                 mAdapter.setSpaceData(items);
+                viewModel.getItemList().removeObservers(requireActivity());
             }
         });
 
@@ -69,5 +71,13 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
         bundle.putString(FirebaseAnalytics.Param.VALUE, Integer.toString(position));
         SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
         ((SearchActivity) requireActivity()).showDetail(position);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mDataBinding = null;
+        mAdapter = null;
+
     }
 }

@@ -11,26 +11,15 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/cns_layout_navigation_buttons"
 
         />
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:id="@+id/cns_layout_navigation_buttons"
-    android:background="@android:color/black"
-    >
-
-        <com.google.android.gms.ads.AdView
+    <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="0dp"
@@ -45,11 +34,11 @@
         ads:contentDescription="@string/AdView_content_description"
 
         >
-
-    </com.google.android.gms.ads.AdView>
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+        </com.google.android.gms.ads.AdView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </layout>

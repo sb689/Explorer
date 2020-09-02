@@ -33,6 +33,8 @@ public class SpaceItemListAdapter extends RecyclerView.Adapter<SpaceItemListAdap
         notifyDataSetChanged();
     }
 
+
+
     public interface itemClickedListener{
         void itemClicked(int position);
     }
