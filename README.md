@@ -52,7 +52,7 @@ This application was built as the final project of the Udacity android nanodegre
 - Implements intent service and work manager to download and update the widget image periodically; 
 - Provides search suggestions based on previous search history using Room, ViewModel, and LiveData 
 - Implements Google Analytics to track search keywords. 
-- Supports different screen sizes
+
 
 
 
