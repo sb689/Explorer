@@ -88,38 +88,37 @@ public class DetailFragment extends Fragment {
 
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false );
 
-        SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
-        viewModel.getItemList().observe(requireActivity(), new Observer<List<Item>>() {
-            @Override
-            public void onChanged(List<Item> items) {
-                mItemList = items;
-                viewModel.getItemList().removeObservers(requireActivity());
-                Log.d( TAG, " mItemList status= " + mItemList);
-                if(mItemList != null)
-                {
-                    Log.d( TAG, " mItemList size= " + mItemList.size());
+        if(getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
+            String assetId = getArguments().getString(BUNDLE_ASSET_ID_KEY);
+            //get data for provided assetId
+            mAssetDetailView = true;
+            Log.d(TAG, ":::::::::::::  calling getAssetDetail");
+            getAssetDetail(assetId);
+        }
+        else {
+
+            SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
+            viewModel.getItemList().observe(requireActivity(), new Observer<List<Item>>() {
+                @Override
+                public void onChanged(List<Item> items) {
+                    mItemList = items;
+                    viewModel.getItemList().removeObservers(requireActivity());
+
+                    //test block
+                    Log.d(TAG, " mItemList status= " + mItemList);
+                    if (mItemList != null) {
+                        Log.d(TAG, " mItemList size= " + mItemList.size());
+                    }
+                    //test block ends
+
+                    if (mItemList != null && mItemList.size() > 0) {
+                        mAssetDetailView = false;
+                        loadDetailUI(mPosition);
+                    }
                 }
+            });
 
-                if(getArguments().containsKey(BUNDLE_ASSET_ID_KEY)) {
-                    String assetId = getArguments().getString(BUNDLE_ASSET_ID_KEY);
-                    //get data for provided assetId
-                    mAssetDetailView = true;
-                    Log.d(TAG, ":::::::::::::  calling getAssetDetail");
-                    getAssetDetail(assetId);
-                }
-
-                else if(mItemList != null && mItemList.size() > 0){
-                    mAssetDetailView = false;
-                    loadDetailUI(mPosition);
-                }
-                else{
-                    Log.d(TAG, ":::::::::::::  inside onCreateView, received mItemList null or 0");
-                }
-
-            }
-        });
-
-
+        }
         mDataBinding.ivFrontArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,8 +133,6 @@ public class DetailFragment extends Fragment {
             }
         });
 
-
-        //mDataBinding.tvDescription.setPadding(0,0,0, SearchActivity.mAdViewHeight + 30);
         return mDataBinding.getRoot();
     }
 
@@ -235,6 +232,7 @@ public class DetailFragment extends Fragment {
             return;
         }
 
+        Log.d(TAG, "getAssetDetail, assetID = "+ assetId);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SpaceApiService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
