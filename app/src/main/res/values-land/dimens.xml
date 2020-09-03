@@ -22,6 +22,7 @@
     <dimen name="label_creator_width_percent">0.30</dimen>
     <dimen name="tv_creator_width_percent">0.65</dimen>
     <dimen name="detail_group_margin_start">48dp</dimen>
+    <dimen name="description_text_margin_end">32dp</dimen>
 
 
 </resources>
