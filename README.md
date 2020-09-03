@@ -46,5 +46,14 @@ This application was built as the final project of the Udacity android nanodegre
 - All app dependencies are managed by Gradle.
 - App stores data locally using Room OR Firebase Realtime Database. If Room is used then LiveData and ViewModel are used when required and no unnecessary calls to the database are made.
 
+## App Features
+- Uses NASA API to retrieve information for provided search key; 
+- Implements ViewModels and LiveData to share data among fragments; 
+- Implements intent service and work manager to download and update the widget image periodically; 
+- Provides search suggestions based on previous search history using Room, ViewModel, and LiveData 
+- Implements Google Analytics to track search keywords. 
+- Supports different screen sizes
+
+
 
 

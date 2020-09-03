@@ -53,7 +53,7 @@ public class SearchActivity extends AppCompatActivity {
 
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
