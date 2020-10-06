@@ -15,12 +15,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/rv_space_list"
-        android:background="@color/RV_Background"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingBottom="300dp"
         />
+
+<!--    android:background="@color/RV_Background"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
