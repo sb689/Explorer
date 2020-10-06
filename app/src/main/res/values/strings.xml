@@ -45,7 +45,7 @@
 
     <!--    FragmentDetail-->
     <string name="label_location_text">Location: </string>
-    <string name="label_photographer_text">Secondary Creator Credit: </string>
+    <string name="label_photographer_text">Secondary Creator: </string>
     <string name="label_date_text">Date: </string>
 
     <string name="image_content">Image of the searched item</string>

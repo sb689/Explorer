@@ -53,6 +53,7 @@
                     android:layout_marginEnd="@dimen/detail_group_margin_start"
                     android:layout_marginTop="20dp"
                     android:textColor="@color/detail_text_color"
+                    android:textSize="@dimen/detail_title_text_size"
                     />
 
 

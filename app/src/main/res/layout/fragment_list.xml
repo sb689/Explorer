@@ -22,7 +22,7 @@
         android:paddingBottom="300dp"
         />
 
-<!--    android:background="@color/RV_Background"-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
