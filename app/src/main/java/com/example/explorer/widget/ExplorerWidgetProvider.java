@@ -61,8 +61,8 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
         Log.d(TAG, "called onUpdate in ExplorerWidgetProvider");
        // WidgetUpdateService.startActionUpdateWidget(context);
         WidgetUpdateHelper helper = new WidgetUpdateHelper(context);
-        String assetId = helper.getAssetIdOfTheDay(context);
-        String url = helper.getImageUrlOfTheDay(context);
+        String assetId = helper.getAssetIdOfTheDay();
+        String url = helper.getImageUrlOfTheDay();
         Log.d(TAG, "imageUrl onUpdate is : "+ url);
         updateExplorerWidget(context, appWidgetManager, appWidgetIds, url, assetId);
     }
