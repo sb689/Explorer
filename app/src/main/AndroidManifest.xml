@@ -22,8 +22,6 @@
                 android:resource="@xml/explorer_widget_info" />
         </receiver>
 
-        <service android:name=".widget.WidgetUpdateService"/>
-
 
         <!-- This meta-data tag is required to use AdMob. -->
         <meta-data

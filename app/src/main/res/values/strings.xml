@@ -70,7 +70,7 @@
         <item>GSFC_20171208_Archive_e000492</item>
         <item>PIA15427</item>
         <item>PIA01966</item>
-        <item>AFRC2017-0233-007</item>
+        <item>GSFC_20171208_Archive_e002039</item>
     </string-array>
 
     <string-array name="image_urls">
@@ -81,7 +81,7 @@
         <item>https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000492/GSFC_20171208_Archive_e000492~thumb.jpg</item>
         <item>https://images-assets.nasa.gov/image/PIA15427/PIA15427~thumb.jpg</item>
         <item>https://images-assets.nasa.gov/image/PIA01966/PIA01966~thumb.jpg</item>
-        <item>https://images-assets.nasa.gov/image/AFRC2017-0233-007/AFRC2017-0233-007~thumb.jpg</item>
+        <item>https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e002039/GSFC_20171208_Archive_e002039~thumb.jpg</item>
     </string-array>
 
     <string name="widget_intent_asset_id_key">com.example.explorer.key_asset_id</string>

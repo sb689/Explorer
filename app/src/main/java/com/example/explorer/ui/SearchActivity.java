@@ -12,6 +12,7 @@ import androidx.work.WorkManager;
 
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Trace;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -30,6 +31,7 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 
@@ -66,11 +68,14 @@ public class SearchActivity extends AppCompatActivity {
         Log.d(TAG, "banner added of size, "+ getSmartBannerHeightDp());
         mAdViewHeight = getSmartBannerHeightDp();
 
+
         if(getIntent().getAction().equals(getString(R.string.widget_action_detail_view)) && savedInstanceState == null )
         {
+            //Trace.beginSection("detail from widget loading");
             Log.d(TAG, "::::::::::::::  intent received");
             mAssetId = getIntent().getStringExtra(getString(R.string.widget_intent_asset_id_key));
             showDetailForAsset(mAssetId);
+            //Trace.endSection();
 
         }
         else if(savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_ASSET_ID_KEY)){
@@ -92,13 +97,16 @@ public class SearchActivity extends AppCompatActivity {
                 .build();
 
         PeriodicWorkRequest saveRequest =
-                new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class, 1, TimeUnit.DAYS)
+                new PeriodicWorkRequest.Builder(WidgetUpdateWorker.class,
+                        24, TimeUnit.HOURS,
+                        1, TimeUnit.HOURS)
                         .setConstraints(constraints)
+
                         .build();
 
         WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
                 WidgetUpdateWorker.class.getSimpleName(),
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.REPLACE,
                 saveRequest);
     }
 
