@@ -85,7 +85,7 @@
     </string-array>
 
     <string name="widget_intent_asset_id_key">com.example.explorer.key_asset_id</string>
-
+    <string name="widget_intent_image_url_key">com.example.explorer.key_image_url</string>
 
     <!--    Worker-->
     <string name="shared_pref_id">com.example.explorer.sharedPref</string>

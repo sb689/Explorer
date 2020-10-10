@@ -32,6 +32,7 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.explorer_widget);
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra(context.getString(R.string.widget_intent_asset_id_key), assetId);
+        intent.putExtra(context.getString(R.string.widget_intent_image_url_key), imageUrl);
         intent.setAction(context.getString(R.string.widget_action_detail_view));
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,

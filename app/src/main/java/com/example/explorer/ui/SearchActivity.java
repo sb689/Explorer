@@ -1,6 +1,5 @@
 package com.example.explorer.ui;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -10,38 +9,29 @@ import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
-import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Trace;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-
 
 import com.example.explorer.R;
 import com.example.explorer.databinding.ActivitySearchBinding;
 import com.example.explorer.widget.WidgetUpdateWorker;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchFragment.SearchResult, ListFragment.DetailItem{
 
     private static final String TAG = SearchActivity.class.getSimpleName();
     private static final String SAVED_INSTANCE_ASSET_ID_KEY = "asset_id_key";
 
     public static int mAdViewHeight;
-    public static int mPosition;
     public static FirebaseAnalytics mFirebaseAnalytics;
     private ActivitySearchBinding mDataBinding;
     private String mAssetId;
@@ -52,11 +42,8 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
-
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
@@ -84,7 +71,7 @@ public class SearchActivity extends AppCompatActivity {
         }
         else if (savedInstanceState == null) {
             Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is null, loading SearchFragment");
-             SearchFragment fragment = new SearchFragment();
+             SearchFragment fragment = SearchFragment.newInstance(this);
              getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
@@ -118,33 +105,11 @@ public class SearchActivity extends AppCompatActivity {
         return screenHeightDp > 720 ? 90 : screenHeightDp > 400 ? 50 : 32;
     }
 
-    public void getScreenSize(){
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point outSize = new Point();
-        display.getSize(outSize);
-        int width = outSize.x;
-        int height = outSize.y;
-
-        Log.d(TAG, ":::::::::: screen size , x =" + width + " and y = " + height);
-    }
-
-    public void showSearchResponseList(){
-
-        ListFragment listFragment = new ListFragment();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, listFragment, null)
-                .addToBackStack(listFragment.getClass().getSimpleName())
-                .commit();
-    }
-
 
     private void showDetailForAsset(String assetId){
         DetailFragment detailFragment = DetailFragment.newInstance(assetId);
 
-        SearchFragment fragment = new SearchFragment();
+        SearchFragment fragment = SearchFragment.newInstance(this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -157,9 +122,28 @@ public class SearchActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void showDetail(int position){
 
-        mPosition = position;
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if( mAssetId != null && !mAssetId.isEmpty()){
+            outState.putString(SAVED_INSTANCE_ASSET_ID_KEY, mAssetId);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void resultFound() {
+        ListFragment listFragment = ListFragment.newInstance(this);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, listFragment, null)
+                .addToBackStack(listFragment.getClass().getSimpleName())
+                .commit();
+    }
+
+    @Override
+    public void itemSelectedForDetailView(int position) {
         DetailFragment detailFragment = DetailFragment.newInstance(position);
 
         getSupportFragmentManager()
@@ -168,14 +152,6 @@ public class SearchActivity extends AppCompatActivity {
                         detailFragment, DetailFragment.TAG)
                 .addToBackStack(DetailFragment.TAG)
                 .commit();
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        if( mAssetId != null && !mAssetId.isEmpty()){
-            outState.putString(SAVED_INSTANCE_ASSET_ID_KEY, mAssetId);
-        }
-        super.onSaveInstanceState(outState);
     }
 
 }

@@ -74,24 +74,20 @@ public class SpaceItemListAdapter extends RecyclerView.Adapter<SpaceItemListAdap
         }
 
         void bindData(int position){
-            String imagePath = mItemList.get(position).getLinks().get(0).getHref();
-            Picasso.get().load(imagePath).into(mDataBinding.ivSpaceImage);
-            String imageTitle = mItemList.get(position).getData().get(0).getTitle();
-            mDataBinding.tvTitle.setText(imageTitle);
+            Picasso.get().load(mItemList.get(position).getLinks().get(0).getHref()).into(mDataBinding.ivSpaceImage);
+            mDataBinding.tvTitle.setText(mItemList.get(position).getData().get(0).getTitle());
 
             String partialDesc = mDataBinding.getRoot().getContext().getString(R.string.item_image_content_desc
-                , imageTitle);
+                , mItemList.get(position).getData().get(0).getTitle());
             mDataBinding.ivSpaceImage.setContentDescription(partialDesc);
 
-            String shortDesc = mItemList.get(position).getData().get(0).getDescription();
-            mDataBinding.tvShortDesc.setText(shortDesc);
+            mDataBinding.tvShortDesc.setText(mItemList.get(position).getData().get(0).getDescription());
         }
 
         @Override
         public void onClick(View v) {
             Log.d(TAG, "item clicked received in adapter" );
-            int position = getAdapterPosition();
-            mItemClickedListener.itemClicked(position);
+            mItemClickedListener.itemClicked(getAdapterPosition());
         }
     }
 }

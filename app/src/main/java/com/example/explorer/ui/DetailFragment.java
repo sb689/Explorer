@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -138,20 +137,15 @@ public class DetailFragment extends Fragment {
 
 
     public void loadDetailUI(int position) {
-
-        Log.d(TAG, ":::::::: inside loadDetailUI, position = "+ position);
-        Item selectedItem = mItemList.get(position);
         mPosition = position;
-        Log.d(TAG, "printing item detail to solve bug");
-        Log.d(TAG, "title " + selectedItem.getData().get(0).getTitle());
-        Log.d(TAG, "href: " + selectedItem.getLinks().get(0).getHref());
+        loadFromItem(mItemList.get(position));
 
+    }
+
+    private void loadFromItem(Item selectedItem)
+    {
         mDataBinding.tvDetailTitle.setText(selectedItem.getData().get(0).getTitle());
-
-        Log.d(TAG, ":::::::: inside loadDetailUI, title = "+ selectedItem.getData().get(0).getTitle());
-        String imagePath = selectedItem.getLinks().get(0).getHref();
-        Picasso.get().load(imagePath).into(mDataBinding.ivDetailImage);
-
+        Picasso.get().load(selectedItem.getLinks().get(0).getHref()).into(mDataBinding.ivDetailImage);
         String creator = selectedItem.getData().get(0).getSecondary_creator();
         if(creator == null || creator.isEmpty()){
             creator = getContext().getString(R.string.secondary_creator_na);
@@ -160,27 +154,8 @@ public class DetailFragment extends Fragment {
         mDataBinding.tvCreator.setText(creator);
         mDataBinding.tvDate.setText(selectedItem.getData().get(0).getDate_created());
         mDataBinding.tvDescription.setText(selectedItem.getData().get(0).getDescription());
-
     }
 
-
-    private  void loadDetailAssetInfo(Item item) {
-
-
-        mDataBinding.tvDetailTitle.setText(item.getData().get(0).getTitle());
-
-        String imagePath = item.getLinks().get(0).getHref();
-        Picasso.get().load(imagePath).into(mDataBinding.ivDetailImage);
-
-        String creator = item.getData().get(0).getSecondary_creator();
-        if(creator == null || creator.isEmpty()){
-            creator = getContext().getString(R.string.secondary_creator_na);
-        }
-        mDataBinding.tvCreator.setText(creator);
-        mDataBinding.tvDate.setText(item.getData().get(0).getDate_created());
-        mDataBinding.tvDescription.setText(item.getData().get(0).getDescription());
-
-    }
 
     public void showNextItem(){
         Log.d(TAG, ":::::::: from nextCLicked to showNextItem");
@@ -217,12 +192,20 @@ public class DetailFragment extends Fragment {
     }
 
 
-    private void loadDetailsForAsset(Item item){
-
-         mDataBinding.pbDetail.setVisibility(View.GONE);
-        loadDetailAssetInfo(item);
-
-    }
+//    private void loadDetailsForAsset(Item item){
+//
+//        mDataBinding.tvDetailTitle.setText(item.getData().get(0).getTitle());
+//        Picasso.get().load(item.getLinks().get(0).getHref()).into(mDataBinding.ivDetailImage);
+//
+//        String creator = item.getData().get(0).getSecondary_creator();
+//        if(creator == null || creator.isEmpty()){
+//            creator = getContext().getString(R.string.secondary_creator_na);
+//        }
+//        mDataBinding.tvCreator.setText(creator);
+//        mDataBinding.tvDate.setText(item.getData().get(0).getDate_created());
+//        mDataBinding.tvDescription.setText(item.getData().get(0).getDescription());
+//
+//    }
 
 
     public void getAssetDetail(String assetId){
@@ -256,7 +239,8 @@ public class DetailFragment extends Fragment {
                     if(items != null && items.size() > 0){
 
                         Log.d(TAG, ":::::::::::::: inside onResponse, items.size = " + items.size());
-                        loadDetailsForAsset(items.get(0));
+                        loadFromItem(items.get(0));
+                        mDataBinding.pbDetail.setVisibility(View.GONE);
                     }
                     else{
                         Log.d(TAG, ":::::::::::::: call succeed, no data found " + response.toString());

@@ -48,8 +48,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-
-public class SearchFragment  extends Fragment {
+public class SearchFragment extends Fragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
@@ -60,9 +59,18 @@ public class SearchFragment  extends Fragment {
     private List<QueryRecordEntry> mQueryRecordHistory;
     private List<YearRecordEntry> mYearRecordHistory;
     private ArrayAdapter<String> mYearAdapter;
-    private  ArrayAdapter<String> mQueryAdapter;
+    private ArrayAdapter<String> mQueryAdapter;
+    private static SearchResult mSearchResult;
 
+    public static SearchFragment newInstance(SearchResult obj) {
+        SearchFragment fragment = new SearchFragment();
+        SearchFragment.mSearchResult = obj;
+        return fragment;
+    }
 
+    public interface SearchResult {
+        void resultFound();
+    }
 
     @Nullable
     @Override
@@ -81,7 +89,7 @@ public class SearchFragment  extends Fragment {
                 Log.d(TAG, ":::::::::  inside onChanged, recordEntries = " + recordEntries);
                 mQueryRecordHistory = recordEntries;
                 loadQuerySuggestions();
-                if(recordEntries.size() > RECORD_THRESHOLD){
+                if (recordEntries.size() > RECORD_THRESHOLD) {
                     deleteExtraQueries();
                 }
             }
@@ -93,7 +101,7 @@ public class SearchFragment  extends Fragment {
             public void onChanged(List<YearRecordEntry> yearRecordEntries) {
                 mYearRecordHistory = yearRecordEntries;
                 loadYearSuggestions();
-                if(yearRecordEntries.size() > RECORD_THRESHOLD){
+                if (yearRecordEntries.size() > RECORD_THRESHOLD) {
                     deleteExtraYears();
                 }
             }
@@ -113,20 +121,18 @@ public class SearchFragment  extends Fragment {
                 boolean isHandled = false;
                 mDataBinding.tvErrorMsg.setVisibility(View.GONE);
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-        
-                    if(v == mDataBinding.etQueryInput) {
+
+                    if (v == mDataBinding.etQueryInput) {
                         mDataBinding.etQueryInput.clearFocus();
                         mDataBinding.etStartYearInput.requestFocus();
                         mDataBinding.etStartYearInput.setCursorVisible(true);
                         isHandled = true;
-                    }
-                    else if(v == mDataBinding.etStartYearInput){
+                    } else if (v == mDataBinding.etStartYearInput) {
                         mDataBinding.etStartYearInput.clearFocus();
                         mDataBinding.etEndYearInput.requestFocus();
                         mDataBinding.etEndYearInput.setCursorVisible(true);
                         isHandled = true;
-                    }
-                    else if(v == mDataBinding.etEndYearInput){
+                    } else if (v == mDataBinding.etEndYearInput) {
                         mDataBinding.etEndYearInput.clearFocus();
                         mDataBinding.etEndYearInput.setCursorVisible(false);
                         mDataBinding.buttonSearch.requestFocus();
@@ -144,17 +150,11 @@ public class SearchFragment  extends Fragment {
     }
 
 
-
     private void deleteExtraQueries() {
 
-        Log.d(TAG, "inside deleteExtraQuery");
-        Log.d(TAG, "size of mQueryRecordHistory is  = " + mQueryRecordHistory.size());
-        for(int i = 0; i< mQueryRecordHistory.size(); i++){
-            Log.d(TAG, mQueryRecordHistory.get(i).getSearchKey()+" -> " + mQueryRecordHistory.get(i).getCreatedAt());
-        }
         int noOfRecordToBeDeleted = mQueryRecordHistory.size() - RECORD_THRESHOLD;
         List<QueryRecordEntry> toBeDeleted = new ArrayList<>();
-        for(int i = 0; i< noOfRecordToBeDeleted; i++){
+        for (int i = 0; i < noOfRecordToBeDeleted; i++) {
             toBeDeleted.add(mQueryRecordHistory.get(i));
         }
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -165,15 +165,11 @@ public class SearchFragment  extends Fragment {
         });
     }
 
-    private void deleteExtraYears(){
-        Log.d(TAG, "inside deleteExtraYear");
-        Log.d(TAG, "size of mQueryRecordHistory is  = " + mQueryRecordHistory.size());
-        for(int i = 0; i< mYearRecordHistory.size(); i++){
-            Log.d(TAG, mYearRecordHistory.get(i).getYear()+" -> " + mYearRecordHistory.get(i).getCreatedAt());
-        }
+    private void deleteExtraYears() {
+
         int noOfRecordToBeDeleted = mYearRecordHistory.size() - RECORD_THRESHOLD;
         List<YearRecordEntry> toBeDeleted = new ArrayList<>();
-        for(int i = 0; i< noOfRecordToBeDeleted; i++){
+        for (int i = 0; i < noOfRecordToBeDeleted; i++) {
             toBeDeleted.add(mYearRecordHistory.get(i));
         }
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -188,11 +184,11 @@ public class SearchFragment  extends Fragment {
     private void loadYearSuggestions() {
 
         List<String> yearSuggestions = new ArrayList<String>();
-        for(int i = 0; i < mYearRecordHistory.size(); i++) {
+        for (int i = 0; i < mYearRecordHistory.size(); i++) {
             String year = mYearRecordHistory.get(i).getYear();
             yearSuggestions.add(year);
         }
-         mYearAdapter = new ArrayAdapter<String>(requireActivity(),
+        mYearAdapter = new ArrayAdapter<String>(requireActivity(),
                 android.R.layout.simple_list_item_1, yearSuggestions);
         mDataBinding.etStartYearInput.setAdapter(mYearAdapter);
         mDataBinding.etEndYearInput.setAdapter(mYearAdapter);
@@ -202,7 +198,7 @@ public class SearchFragment  extends Fragment {
     private void loadQuerySuggestions() {
 
         List<String> mQuerySuggestions = new ArrayList<String>();
-        for(int i = 0; i< mQueryRecordHistory.size(); i ++) {
+        for (int i = 0; i < mQueryRecordHistory.size(); i++) {
             String query = mQueryRecordHistory.get(i).getSearchKey();
             mQuerySuggestions.add(query);
         }
@@ -213,14 +209,17 @@ public class SearchFragment  extends Fragment {
     }
 
 
-    private void showErrorMessage(int errorTag){
+    private void showErrorMessage(int errorTag) {
 
-        switch (errorTag){
-            case 1:   mDataBinding.tvErrorMsg.setText(getString(R.string.main_error_msg_no_network));
+        switch (errorTag) {
+            case 1:
+                mDataBinding.tvErrorMsg.setText(getString(R.string.main_error_msg_no_network));
                 break;
-            case 3: mDataBinding.tvErrorMsg.setText(getString(R.string.main_error_msg_no_data_found));
+            case 3:
+                mDataBinding.tvErrorMsg.setText(getString(R.string.main_error_msg_no_data_found));
                 break;
-            default: mDataBinding.tvErrorMsg.setText(getString(R.string.main_error_msg_general));
+            default:
+                mDataBinding.tvErrorMsg.setText(getString(R.string.main_error_msg_general));
         }
 
         mDataBinding.pbMain.setVisibility(View.INVISIBLE);
@@ -228,23 +227,21 @@ public class SearchFragment  extends Fragment {
         mDataBinding.buttonSearch.setEnabled(true);
     }
 
-    private  void showProgressBar(){
+    private void showProgressBar() {
         mDataBinding.buttonSearch.setEnabled(false);
         mDataBinding.pbMain.setVisibility(View.VISIBLE);
     }
 
-    private  void hideProgressBar(){
+    private void hideProgressBar() {
         mDataBinding.pbMain.setVisibility(View.INVISIBLE);
         mDataBinding.buttonSearch.setEnabled(true);
 
     }
 
 
+    public void searchClicked() {
 
-
-    public void searchClicked(){
-
-        if(!NetworkUtils.isNetworkConnected(requireActivity())){
+        if (!NetworkUtils.isNetworkConnected(requireActivity())) {
             showErrorMessage(NetworkUtils.ERROR_TAG_NO_NETWORK);
             return;
         }
@@ -254,7 +251,7 @@ public class SearchFragment  extends Fragment {
                 requireActivity().getSystemService(FragmentActivity.INPUT_METHOD_SERVICE);
         try {
             imm.hideSoftInputFromWindow(mDataBinding.getRoot().getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Log.d(TAG, "closing keyboard attempt ended in NullPointerException");
         }
 
@@ -262,17 +259,17 @@ public class SearchFragment  extends Fragment {
         String query = mDataBinding.etQueryInput.getText().length() > 0 ?
                 mDataBinding.etQueryInput.getText().toString() : null;
 
-        String yearStart =  mDataBinding.etStartYearInput.getText().length() > 0?
+        String yearStart = mDataBinding.etStartYearInput.getText().length() > 0 ?
                 mDataBinding.etStartYearInput.getText().toString() : null;
 
-        String yearEnd =  mDataBinding.etEndYearInput.getText().length() > 0 ?
+        String yearEnd = mDataBinding.etEndYearInput.getText().length() > 0 ?
                 mDataBinding.etEndYearInput.getText().toString() : null;
 
-        if(query == null  && yearStart == null && yearEnd == null){
+        if (query == null && yearStart == null && yearEnd == null) {
 
             Toast.makeText(getActivity(), getString(R.string.toast_search_criteria_required_msg), Toast.LENGTH_LONG).show();
 
-        } else{
+        } else {
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(SpaceApiService.BASE_URL)
@@ -294,16 +291,17 @@ public class SearchFragment  extends Fragment {
                         SpaceResponse spaceResponse = response.body();
                         List<Item> items = spaceResponse.getCollection().getItems();
                         Log.d(TAG, ":::::::::::::: inside onResponse, items.size = " + items.size());
-                        if(items != null && items.size() > 0){
+                        if (items != null && items.size() > 0) {
 
                             SpaceViewModel2 viewModel = new ViewModelProvider(requireActivity()).get(SpaceViewModel2.class);
                             viewModel.setItemList(items);
                             saveQuery(query, yearStart, yearEnd);
 
                             hideProgressBar();
-                            ((SearchActivity) requireActivity()).showSearchResponseList();
-                        }
-                        else{
+
+                            mSearchResult.resultFound();
+
+                        } else {
                             showErrorMessage(NetworkUtils.ERROR_TAG_NO_DATA_FOUND);
                         }
                     } else {
@@ -326,10 +324,9 @@ public class SearchFragment  extends Fragment {
     }
 
 
+    private void saveQuery(String query, String yearStart, String yearEnd) {
 
-    private void saveQuery(String query, String yearStart, String yearEnd){
-
-        if(query != null && !query.isEmpty()) {
+        if (query != null && !query.isEmpty()) {
             QueryRecordEntry entry = new QueryRecordEntry(query, System.currentTimeMillis());
             //log events analytics
             Bundle bundle = new Bundle();
@@ -343,7 +340,7 @@ public class SearchFragment  extends Fragment {
                 }
             });
         }
-        if(yearStart != null && !yearStart.isEmpty()){
+        if (yearStart != null && !yearStart.isEmpty()) {
             YearRecordEntry entry = new YearRecordEntry(yearStart, System.currentTimeMillis());
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
@@ -352,7 +349,7 @@ public class SearchFragment  extends Fragment {
                 }
             });
         }
-        if(yearEnd != null && !yearEnd.isEmpty()) {
+        if (yearEnd != null && !yearEnd.isEmpty()) {
 
             YearRecordEntry entry = new YearRecordEntry(yearEnd, System.currentTimeMillis());
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -373,7 +370,6 @@ public class SearchFragment  extends Fragment {
         mDb = null;
         mQueryAdapter = null;
         mYearAdapter = null;
-        mDataBinding.buttonSearch.setOnClickListener(null);
         mDataBinding.etStartYearInput.setAdapter(null);
         mDataBinding.etEndYearInput.setAdapter(null);
         mDataBinding.etQueryInput.setOnEditorActionListener(null);
@@ -381,7 +377,13 @@ public class SearchFragment  extends Fragment {
         mDataBinding = null;
         mQueryRecordHistory = null;
         mYearRecordHistory = null;
+
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
+        mSearchResult = null;
+    }
 }

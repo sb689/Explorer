@@ -28,14 +28,24 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
     public static final String TAG = ListFragment.class.getSimpleName();
     private FragmentListBinding mDataBinding;
     private SpaceItemListAdapter mAdapter;
+    private static DetailItem listener;
 
+    public interface DetailItem{
+        void itemSelectedForDetailView(int position);
+    }
+
+    public static ListFragment newInstance(DetailItem obj)
+    {
+        ListFragment fragment = new ListFragment();
+        ListFragment.listener = obj;
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mDataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list, container, false);
-
 
         mAdapter = new SpaceItemListAdapter(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -70,14 +80,23 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, getString(R.string.analytics_selected_response));
         bundle.putString(FirebaseAnalytics.Param.VALUE, Integer.toString(position));
         SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
-        ((SearchActivity) requireActivity()).showDetail(position);
+
+        listener.itemSelectedForDetailView(position);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mDataBinding = null;
+        mAdapter.setSpaceData(null);
         mAdapter = null;
+        mDataBinding.rvSpaceList.setAdapter(null);
+        mDataBinding = null;
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listener = null;
     }
 }
