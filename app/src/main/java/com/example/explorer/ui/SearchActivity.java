@@ -26,7 +26,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import java.util.concurrent.TimeUnit;
 
 
-public class SearchActivity extends AppCompatActivity implements SearchFragment.SearchResult, ListFragment.DetailItem{
+public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = SearchActivity.class.getSimpleName();
     private static final String SAVED_INSTANCE_ASSET_ID_KEY = "asset_id_key";
@@ -71,7 +71,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
         }
         else if (savedInstanceState == null) {
             Log.d(TAG, ":::::::::::::::::: intent action for SearchActivity is null, loading SearchFragment");
-             SearchFragment fragment = SearchFragment.newInstance(this);
+             SearchFragment fragment = SearchFragment.newInstance();
              getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
@@ -109,7 +109,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
     private void showDetailForAsset(String assetId){
         DetailFragment detailFragment = DetailFragment.newInstance(assetId);
 
-        SearchFragment fragment = SearchFragment.newInstance(this);
+        SearchFragment fragment = SearchFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -131,9 +131,9 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
         super.onSaveInstanceState(outState);
     }
 
-    @Override
+
     public void resultFound() {
-        ListFragment listFragment = ListFragment.newInstance(this);
+        ListFragment listFragment = ListFragment.newInstance();
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -142,7 +142,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFragment.
                 .commit();
     }
 
-    @Override
+
     public void itemSelectedForDetailView(int position) {
         DetailFragment detailFragment = DetailFragment.newInstance(position);
 

@@ -28,16 +28,10 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
     public static final String TAG = ListFragment.class.getSimpleName();
     private FragmentListBinding mDataBinding;
     private SpaceItemListAdapter mAdapter;
-    private static DetailItem listener;
 
-    public interface DetailItem{
-        void itemSelectedForDetailView(int position);
-    }
-
-    public static ListFragment newInstance(DetailItem obj)
+    public static ListFragment newInstance()
     {
         ListFragment fragment = new ListFragment();
-        ListFragment.listener = obj;
         return fragment;
     }
 
@@ -81,7 +75,7 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
         bundle.putString(FirebaseAnalytics.Param.VALUE, Integer.toString(position));
         SearchActivity.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM, bundle);
 
-        listener.itemSelectedForDetailView(position);
+        ((SearchActivity)requireActivity()).itemSelectedForDetailView(position);
     }
 
     @Override
@@ -94,9 +88,5 @@ public class ListFragment extends Fragment implements SpaceItemListAdapter.itemC
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        listener = null;
-    }
+
 }

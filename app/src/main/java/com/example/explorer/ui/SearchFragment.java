@@ -60,17 +60,13 @@ public class SearchFragment extends Fragment {
     private List<YearRecordEntry> mYearRecordHistory;
     private ArrayAdapter<String> mYearAdapter;
     private ArrayAdapter<String> mQueryAdapter;
-    private static SearchResult mSearchResult;
 
-    public static SearchFragment newInstance(SearchResult obj) {
+
+    public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
-        SearchFragment.mSearchResult = obj;
         return fragment;
     }
 
-    public interface SearchResult {
-        void resultFound();
-    }
 
     @Nullable
     @Override
@@ -299,7 +295,7 @@ public class SearchFragment extends Fragment {
 
                             hideProgressBar();
 
-                            mSearchResult.resultFound();
+                            ((SearchActivity)requireActivity()).resultFound();
 
                         } else {
                             showErrorMessage(NetworkUtils.ERROR_TAG_NO_DATA_FOUND);
@@ -380,10 +376,5 @@ public class SearchFragment extends Fragment {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
 
-        mSearchResult = null;
-    }
 }
