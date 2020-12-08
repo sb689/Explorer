@@ -22,7 +22,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -89,13 +89,13 @@ public class SearchActivity extends AppCompatActivity {
                         24, TimeUnit.HOURS,
                         1, TimeUnit.HOURS)
                         .setConstraints(constraints)
-
                         .build();
 
         WorkManager.getInstance(getApplicationContext()).enqueueUniquePeriodicWork(
                 WidgetUpdateWorker.class.getSimpleName(),
-                ExistingPeriodicWorkPolicy.REPLACE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 saveRequest);
+
     }
 
 

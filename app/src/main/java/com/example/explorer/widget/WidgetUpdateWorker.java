@@ -31,7 +31,6 @@ public class WidgetUpdateWorker extends Worker {
     public Result doWork() {
 
         Log.d(TAG, "::::::::::called updateWidgetWorker doWork");
-
         WidgetUpdateHelper helper = new WidgetUpdateHelper(getApplicationContext());
         String assetId = helper.getAssetIdOfTheDay();
         String url = helper.getImageUrlOfTheDay();

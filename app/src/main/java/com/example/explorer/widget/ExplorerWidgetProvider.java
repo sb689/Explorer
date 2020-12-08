@@ -48,7 +48,6 @@ public class ExplorerWidgetProvider extends AppWidgetProvider {
                 Picasso.get().load(imageUrl).into(views, R.id.iv_widget, appWidgetIds);
             }
         });
-
         views.setOnClickPendingIntent(R.id.iv_widget, pendingIntent);
 
         // Instruct the widget manager to update the widget
